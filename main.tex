@@ -118,7 +118,10 @@
 % ── Table of contents ────────────────────────────────────────
 % Remove or comment out if you prefer to start directly
 % with Section 1. On a 10-page document a ToC is optional.
+\thispagestyle{empty}
 \tableofcontents
+\thispagestyle{empty}
+
 \newpage
 
 % ============================================================
@@ -127,7 +130,8 @@
 % To reorder sections: rearrange the \input lines below.
 % To combine sections: merge two files or add content here.
 % ============================================================
-
+\setcounter{page}{1}
+\pagenumbering{arabic}
 \input{sections/01_problem}
 
 \input{sections/02_architecture}
@@ -141,17 +145,20 @@
 % ── References ───────────────────────────────────────────────
 % Printed here. Does not count toward the 10-page limit.
 \newpage
+\thispagestyle{empty}
 \printbibliography[heading=bibintoc, title={References}]
 
 % ── AI-use declaration ───────────────────────────────────────
 % Required. Does not count toward the 10-page limit.
 \newpage
+\pagenumbering{Roman}
 \input{sections/06_aideclaration}
 
 % ── Appendices ───────────────────────────────────────────────
 % Architecture diagram and screenshots.
 % Does not count toward the 10-page limit.
 \newpage
+
 \input{sections/appendix}
 
 % ============================================================

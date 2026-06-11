@@ -1,9 +1,115 @@
 % ============================================================
 % appendix.tex
-% Appendices: Architecture Diagram and Screenshots
+% Appendices: Architecture Diagram, Screenshots, and Algorithmic Details
 % ============================================================
 
 \appendix
+
+
+\section{Project Access Information}
+\label{app:access}
+
+To facilitate evaluation and reproducibility, the key project access information is summarized below.
+
+\subsection*{Project Overview}
+
+\textbf{Project Name:} Maverick-SORT
+
+The project name is inspired by the call sign ``Maverick'' from the \textit{Top Gun} film series, reflecting the system's objective of supporting fast and adaptive operational decision-making in complex environments.
+
+% \subsection*{Source Code Repository}
+
+% \textbf{GitHub Repository:}
+
+% \url{https://github.com/HXD3D-0121/maverick_sort}
+
+% The repository contains all source code, datasets, configuration files, and documentation required to reproduce the prototype.
+
+\subsection*{Prototype Access}
+
+Two prototype versions were developed and deployed:
+
+\begin{itemize}
+\item \textbf{Essential Edition}
+
+```
+\url{https://appappv7py-2jdt5edznzt56z663phvsh.streamlit.app/}
+
+\item \textbf{Professional Edition}
+
+\url{https://appappprov5py-trwbxkskxdrjmvlfddahjw.streamlit.app/}
+```
+
+\end{itemize}
+
+The Professional Edition was the primary version used during the final demonstration.
+
+\textbf{Display Note:}
+For optimal visualization, the Streamlit applications should be viewed using the \textit{Dark Mode} interface setting. Certain dashboard components may not render correctly under Light Mode.
+
+\textit{Note: As both applications are research prototypes, occasional instability or unexpected runtime errors may occur. If those two APPs fall asleep, please contact me to wake them up.}
+
+\subsection*{Backup Demonstration Recording}
+
+A backup video demonstration is provided in case deployment services become unavailable during assessment:
+
+\url{https://drive.google.com/file/d/1pLonRq-IE0ts2WdB4Mpw1rBiWcq-k8DO/view?usp=drive_link}
+
+\subsection*{Source Code Repository}
+
+\textbf{GitHub Repository:}
+
+\url{https://github.com/HXD3D-0121/maverick_sort}
+
+The repository contains the complete source code, datasets, deployment configurations, and supporting documentation required to reproduce the prototype.
+
+\textbf{Repository Structure Summary}
+
+\begin{itemize}
+\item \textbf{Streamlit Applications}
+
+Essential Edition (\texttt{streamlit\_app\_v7.py}) and \\ Professional Edition (\texttt{streamlit\_app\_pro\_v5.py}) \\ together with earlier development iterations.
+
+\item \textbf{Core Algorithms}
+
+KGDRL scheduling engine, PPO environment, NSGA-II multi-objective optimizer, adaptive policy module, and What-If simulator.
+
+\item \textbf{AI Integration}
+
+Hugging Face based copilot, insight engine, report generation, demand forecasting, and RAG-enabled alert analysis modules.
+
+\item \textbf{Research Experiments}
+
+Complete KGDRL training, benchmarking, robustness testing, and baseline comparisons (A2C, DDPG, DDQN, heuristic rules).
+
+\item \textbf{Visualization and Dashboards}
+
+Standalone HTML dashboards, bilingual visual analytics packages, and deployment-ready reporting tools.
+
+\item \textbf{Commercialization and Product Documents}
+
+Pricing strategy, deployment guides, feasibility analyses, competitor reviews, and product planning materials.
+```
+
+\end{itemize}
+
+\subsection*{Software Environment}
+
+The prototype was developed, tested, and deployed under the following environment:
+
+\begin{itemize}
+\item Python 3.12
+\item Streamlit 1.58
+\item PyTorch 2.12
+\item Stable-Baselines3
+\item Hugging Face Inference API
+\end{itemize}
+
+All dependencies, datasets, and deployment configurations are included in the repository through version-controlled requirement files.
+
+\clearpage
+
+
 \section{Product Architecture}
 \label{app:architecture}
 
@@ -29,24 +135,184 @@ $\rightarrow$ \texttt{Streamlit Dashboard} (Algorithm Arena + visualizations)
 \end{figure}
 
 
-\section{Key Screenshots}
+% \section{Key Screenshots}
+% \label{app:screenshots}
+
+% \textit{Note: The following screenshots are placeholders for the final submission. High-resolution versions will be included in the PDF appendix.}
+
+% \begin{enumerate}
+%     \item \textbf{Algorithm Arena}: Comparison of KGDRL vs. baselines on reward, picking distance, and temperature violations.
+%     \item \textbf{What-If Scenario Simulator}: Parameter sweep showing cost sensitivity to wave capacity changes.
+%     \item \textbf{Real-Time Simulation}: Streamlit dashboard displaying wave composition, zone coverage, and compliance status.
+% \end{enumerate}
+
+\section{Key Screenshots: Visualizing the Commercial Value}
 \label{app:screenshots}
 
-\textit{Note: The following screenshots are placeholders for the final submission. High-resolution versions will be included in the PDF appendix.}
+To substantiate the product positioning and commercial viability discussed in Section 1, the following visual evidence highlights how the system translates complex algorithms into executive decision support.
 
-\begin{enumerate}
-    \item \textbf{Algorithm Arena}: Comparison of KGDRL vs. baselines on reward, picking distance, and temperature violations.
-    \item \textbf{What-If Scenario Simulator}: Parameter sweep showing cost sensitivity to wave capacity changes.
-    \item \textbf{Real-Time Simulation}: Streamlit dashboard displaying wave composition, zone coverage, and compliance status.
-\end{enumerate}
+\vspace{0.5cm}
+\noindent\textbf{1. Zero-Risk ROI Validation (What-If Scenario Simulator)}
 
+This dashboard demonstrates the ``Risk Reversal'' engine. It captures a parameter sweep and displays the instant projection of cost savings and deadline compliance without touching live WMS data.
 
-\section{PPO Hyperparameters}
-\label{app:hyperparams}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{media/images/what-if-senario.png}
+    \caption{What-If Scenario Simulator}
+    \label{fig:what_if}
+\end{figure}
+
+\vspace{0.5cm}
+\noindent\textbf{2. Transparent Multi-Objective Trade-offs (Strategy Optimizer)}
+
+This screenshot highlights the NSGA-II Pareto front, showing how operations directors can transparently toggle between ``Cost-First'', ``Time-First'', and ``Compliance-First'' modes to balance conflicting KPIs.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{media/images/pareto-optimizer.png}
+    \caption{Strategy Optimizer and Pareto Front}
+    \label{fig:pareto}
+\end{figure}
+
+\vspace{0.5cm}
+\noindent\textbf{3. Explainable AI for GSP Compliance (Algorithm Arena \& AI Copilot)}
+
+This view showcases KGDRL's performance against traditional heuristics alongside the AI Insight Engine. It serves as visual proof that the routing decisions are fully interpretable and audit-ready for GSP regulations.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{"media/images/AI Copilot.png"}
+    \caption{Algorithm Arena \& AI Copilot}
+    \label{fig:copilot}
+\end{figure}
+
+\vspace{0.5cm}
+\noindent\textbf{4. Scalable Executive Command Center}
+
+This image displays the high-level strategic dashboard visualizing net operational value, representing the system's escalation from a single-point tool to an enterprise-grade brain.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{"media/images/command center.png"}
+    \caption{Executive Command Center}
+    \label{fig:command}
+\end{figure}
+
+\section{Algorithmic Framework and Mathematical Details}
+\label{app:algorithm_details}
+
+This section provides the extended mathematical formulation and algorithm construction details that support the Knowledge-Guided Deep Reinforcement Learning (KGDRL) engine discussed in Section 2.
+
+\subsection{Dynamic Reconfiguration Scheduling Model}
+The scheduling environment is abstracted as a system processing $n$ Personalized Customization Tasks (CPP), denoted as $J=\{J_{1},J_{2}...J_{n}\}$. Each task $J_{i}$ contains operations $n_{i}\in\{o_{1}...o_{k}\}$. The sequence constraints are defined by an $n_{i}\times n_{i}$ matrix $seq_{i}$, where $X_{mn}^{i}=1$ if operation $n$ strictly follows operation $m$. 
+
+The warehouse/workshop utilizes $R$ reconfigurable processing units (machines/zones), denoted as $M=\{m_{1},m_{2}...m_{R}\}$. Each unit is parameterized by:
+\begin{itemize}
+    \item $MATY_{r}$: The set of processable operational stages.
+    \item $Rt_{r}$: The reconfiguration time matrix between different stages.
+    \item $Pt_{r}$: The base processing time per unit workload.
+    \item $Sp_{r}$: The dynamic processing speed for current stages.
+\end{itemize}
+The primary objective of the model is to minimize the total makespan, formulated as:
+\begin{equation}
+    \min \max_{i\in 1...n}\{T_{i}\}
+\end{equation}
+where the core decision variable is the allocation matrix $\beta_{jr}^{i} \in \{0,1\}$, indicating whether operation $j$ of job $i$ is assigned to unit $r$.
+
+\subsection{Markov Decision Process (MDP) Formulation}
+To solve the dynamic routing and allocation problem, it is framed as an MDP:
+\begin{itemize}
+    \item \textbf{State ($S_t$)}: Extracted as a graph representation encompassing both task nodes and machine nodes. Each node vector contains 6 features: working state ($wb_t$), idle time ($at_t$), reachable nodes count ($nn_t$), time utilization ($ut_t$), stage count ($CO_t$), and processing speed ($CS_t$).
+    \item \textbf{Action ($a_t$)}: Defined as a joint decision $a_{t}=\{(o_{ij},M_{k})\} \cup \{\text{None}\}$. The critical inclusion of the \textit{None} action enables the agent to deliberately wait, reserving capacity for incoming tasks that might require shorter reconfiguration times, thus maximizing long-term cumulative reward.
+    \item \textbf{Reward ($r_t$)}: Calculates the negative expected completion time and penalizes structural delays:
+    \begin{equation}
+        r(S_{t},S_{t+1},a_{t}) = T(S_{t}) - T(S_{t+1}) - \text{trantime}(a_{t})
+    \end{equation}
+\end{itemize}
+
+\subsection{Knowledge-Guided Network Construction}
+Standard PPO often struggles with sparse rewards in high-dimensional scheduling. KGDRL overcomes this by injecting IF-THEN domain heuristics into the probability distribution. Specifically, if an available unit requires shorter reconfiguration time and faces a heavier subsequent workload, its empirical selection probability is artificially boosted.
+
+To prevent the probability distribution from collapsing into a 0-1 distribution (over-exploitation) or a uniform distribution (ineffective exploration) under standard softmax, KGDRL employs an L1 norm activation function for action guidance:
+\begin{equation}
+    p_{a_{t}} = \alpha_{1}\left(\frac{e^{-S_{1}}}{||e^{-S_{1}}||_{1}}\right) + \alpha_{2}\left(\frac{e^{S_{2}}}{||e^{S_{2}}||_{1}}\right)
+\end{equation}
+where $S_1$ and $S_2$ represent the heuristic scores for reconfiguration time and workload, respectively, and $\alpha_1, \alpha_2$ are balancing weights.
+
+% \subsection{Baseline Performance Comparison}
+% The KGDRL architecture was evaluated against both traditional heuristics and established DRL algorithms across varying instance scales:
+% \begin{itemize}
+%     \item \textbf{Heuristic Baselines}: Included Random, FIFO, and MWKR (Most Work Remain). While MWKR performs decently on small scales, heuristics universally fail to adapt to dynamic reconfiguration times, resulting in suboptimal makespans.
+%     \item \textbf{DRL Baselines (A2C, DDPG, DDQN)}: A2C and DDPG exhibited severe training volatility, failing to converge on complex instances (makespans frequently exceeding 800). While DDQN performed adequately on 5-machine instances, its performance degraded significantly below MWKR on 10-machine high-dimensional instances.
+%     \item \textbf{KGDRL Superiority}: KGDRL demonstrated rapid convergence within the first 200 iterations across all 6 instance sizes. By balancing RL exploration with heuristic knowledge injection, it consistently outperformed both the best heuristic (MWKR) and stable DRLs (DDQN), proving its scalability for enterprise environments.
+% \end{itemize}
+
+\subsection{Baseline Performance Comparison}
+The KGDRL architecture was evaluated against both traditional heuristics and established DRL algorithms across varying instance scales[cite: 2]. To visually substantiate the algorithm's stability and superiority, the training convergence and standard makespan comparisons are presented below:
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        % Note: Quotes are used to handle spaces in filenames
+        \includegraphics[width=\linewidth]{media/images/KGDRL Training.png}
+        \caption{KGDRL training convergence across six instance sizes. Rapid convergence is observed within the first 200 episodes.}
+        \label{fig:kgdrl_training}
+    \end{minipage}\hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{media/images/Standard Makespan.png}
+        \caption{Standard makespan comparison after 1000 iterations. KGDRL consistently outperforms volatile baselines like A2C and DDPG.}
+        \label{fig:standard_makespan}
+    \end{minipage}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Heuristic Baselines}: Included Random, FIFO, and MWKR (Most Work Remain)[cite: 2]. While MWKR performs decently on small scales, heuristics universally fail to adapt to dynamic reconfiguration times, resulting in suboptimal makespans[cite: 2].
+    \item \textbf{DRL Baselines (A2C, DDPG, DDQN)}: As illustrated in Figure~\ref{fig:standard_makespan}, A2C and DDPG exhibited severe training volatility, failing to converge on complex instances with standard makespans frequently exceeding 800[cite: 2]. Furthermore, these makespans increased significantly as instance dimensionality grew[cite: 2]. While DDQN performed adequately on 5-machine instances, its performance degraded significantly below MWKR on 10-machine high-dimensional instances[cite: 2].
+    \item \textbf{KGDRL Superiority}: As shown in Figure~\ref{fig:kgdrl_training}, KGDRL demonstrated rapid and stable convergence within the first 200 iterations across all 6 instance sizes[cite: 2]. By balancing RL exploration with heuristic knowledge injection, it consistently outperformed both the best heuristic (MWKR) and stable DRLs (DDQN), proving its scalability and robustness for enterprise environments[cite: 2].
+\end{itemize}
+
+\subsection{KGDRL Algorithm Pseudocode}
+
+To formalize the training loop and action sampling process discussed above, the complete execution flow of the KGDRL algorithm is summarized in Algorithm~\ref{alg:kgdrl}. It illustrates the iterative training process, specifically highlighting how knowledge-guided probabilities ($p_{\text{advice}}$) are integrated with the policy network outputs ($p_{\text{avail}}, p_{\text{nonavail}}$) to sample the final decision action, followed by the Proximal Policy Optimization (PPO) parameter updates.
+
+\begin{algorithm}[htbp]
+\caption{Knowledge-Guided Deep Reinforcement Learning (KGDRL)}
+\label{alg:kgdrl}
+\begin{algorithmic}[1] % [1] 表示每一行都显示行号，显得极其硬核专业
+\STATE Initialize policy network $\pi_{\omega}$ and evaluation network $V_{\phi}$, set trainable parameters $\omega$ and $\phi$
+\STATE Initialize $\beta$ independent workshop scheduling instances
+\FOR{$iter = 1, 2, \dots, I$}
+    \FOR{$b = 1, 2, \dots, \beta$}
+        \STATE Initialize state $S_t$ based on $b$
+        \WHILE{$S_t$ is not terminated}
+            \STATE Initialize action $a_t$, mask vectors $F_{avail}$ and $F_{nonavail}$ based on $S_t$
+            \STATE $F_{avail} = 1, F_{nonavail} = 0 \text{ if } O_{ij} \in a_t$
+            \STATE Calculate action probability distributions via policy network:
+            \STATE \quad $p_{avail} = \pi_{\omega}(F_{avail}(O_{ij})|S_t)$, $p_{nonavail} = \pi_{\omega}(F_{nonavail}(O_{ij})|S_t)$
+            \STATE Calculate knowledge-guided action probability distribution $p_{advice} = p_{a_t}$
+            \STATE Sample final decision action $a$ based on joint probability $p = p_{advice} + p_{avail} + p_{nonavail}$
+            \STATE Calculate reward $r_t$ and next state vector $S_{t+1}$
+            \STATE $S_t \leftarrow S_{t+1}$
+        \ENDWHILE
+        \STATE For each step, calculate Generalized Advantage Estimation (GAE) $A_t$ based on $r_t$ and $S_{t+1}$
+        \STATE Calculate PPO loss $\Delta$ based on $A_t$
+        \STATE Update network parameters $\omega$ and $\phi$ based on PPO loss $\Delta$
+    \ENDFOR
+\ENDFOR
+        \RETURN
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{PPO Hyperparameters Configuration}
+The training process deployed an Actor-Critic architecture governed by the Proximal Policy Optimization (PPO) clip mechanism. The finalized network parameters are detailed in Table~\ref{tab:hyperparams}.
 
 \begin{table}[htbp]
 \centering
-\caption{Final PPO Hyperparameters}
+\caption{Final KGDRL / PPO Hyperparameters}
+\label{tab:hyperparams}
 \begin{tabular}{ll}
 \hline
 Parameter & Value \\
@@ -56,8 +322,10 @@ Critic learning rate & $1 \times 10^{-5}$ \\
 Discount factor $\gamma$ & 0.96 \\
 GAE lambda & 0.95 \\
 PPO clip $\epsilon$ & 0.2 \\
-Hidden dimension & 128 \\
-Training episodes & 120 \\
+Hidden dimension (2 layers) & 128 \\
+Training episodes & 120 (converges around 200 iterations in extended tests)\\
+Batch size ($B$) & 10 \\
+Replay buffer size & 128 - 2048 \\
 KL constraint weight $\lambda_{\text{kg}}$ & 0.1 \\
 \hline
 \end{tabular}

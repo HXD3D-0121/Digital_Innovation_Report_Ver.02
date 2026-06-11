@@ -42,35 +42,30 @@ Raisch and Krakowski\parencite{raisch2021automation} frame the ``automation-augm
 
 This design choice has a cost: it limits the system's immediate efficiency gains. A full automation integration could push wave decisions directly to pickers' handheld devices. But it also limits adoption risk: operation managers do not need to trust a black box; they need to trust a transparent recommendation they can override.
 
-\subsection{Adoption and Diffusion: Why Would Operation Manager Use This?}
+\subsection{Adoption and Diffusion: A TOE Framework Perspective}
 
-\subsubsection{TOE Framework Analysis}
+The Technology--Organization--Environment (TOE) framework provides a useful lens for understanding whether Maverick-SORT can move beyond a prototype and reach real operational use.
 
-The Technology-Organization-Environment (TOE) framework\parencite{Tornatzky1990, baker2012toe} identifies three contexts that influence technology adoption. Table~\ref{tab:toe} applies it to Maverick-SORT.
+\paragraph{Technology.}
+Maverick-SORT is designed as a decision-support layer rather than a replacement for existing WMS platforms. While WMS systems excel at transaction processing and execution, they provide limited support for simulation, optimization, and scenario analysis. By remaining standalone and browser-based, the system delivers predictive intelligence without requiring costly modifications to legacy infrastructure.
 
-\begin{table}[htbp]
-\centering
-\caption{TOE Analysis for Maverick-SORT Adoption}
-\label{tab:toe}
-\begin{tabular}{p{2.5cm}p{4.5cm}p{5cm}}
-\hline
-Context & Factor & Assessment \\
-\hline
-\textbf{Technology} & Compatibility, complexity, relative advantage & High compatibility (standalone, no ERP integration); low complexity (browser-based); clear relative advantage (15--25\% cost reduction in simulations) \\
-\textbf{Organization} & Size, slack, champion presence & Mid-sized warehouse; limited IT slack \\
-\textbf{Environment} & Competition, regulation, supplier pressure & Intense competition from 3PLs; GSP regulation creates compliance pressure; no dominant supplier forcing adoption \\
-\hline
-\end{tabular}
-\end{table}
+\paragraph{Organization.}
+The key adopter is not the IT department but the Operations Director. Unlike IT managers, whose priority is system stability and risk avoidance, operations managers are directly responsible for warehouse efficiency and service performance. The Essential Edition lowers adoption barriers by allowing them to test potential value independently through a zero-deployment ``What-If'' environment.
 
-\subsubsection{The Single Most Limiting Condition}
+\paragraph{Environment.}
+Pharmaceutical logistics operates under strict GSP compliance requirements. Rather than treating regulation as an obstacle, Maverick-SORT uses explainable, knowledge-guided recommendations to align optimization with existing operational rules. Regulatory pressure therefore becomes a driver of adoption rather than a barrier.
 
-If we must name \textit{one} condition that most limits adoption, it is \textbf{organizational champion bandwidth}. Operation managers will be easily overwhelmed when disposing of hundreds of thousands of tasks at the same time. They may not have a dedicated IT team to evaluate pilot systems. The Essential Edition's entire design---zero installation, five-minute What-If demos, free 30-day trial---is an attempt to reduce the champion's activation energy to near zero.
+\paragraph{The Most Limiting Condition.}
+Among all TOE factors, the greatest constraint is organizational champion bandwidth. Operations managers often lack the time, attention, and political capital required to evaluate new technologies. As a result, adoption depends less on algorithmic performance than on reducing the effort required to explore the solution. The Essential Edition, free trial, and five-minute simulation workflow are all designed to minimize this activation cost.
 
-But even that may not be enough. The TOE framework reminds us that slack resources---time, attention, political capital---are adoption enablers\parencite{baker2012toe}. In a mid-sized warehouse operating on thin margins, the absence of a ``pilot budget'' (not financial, but attentional) is the binding constraint. This is why our pricing includes a 30-day free trial: not because the marginal cost is zero, but because the \textit{perceived risk} must be zero for the champion to engage.
+\subsection{What We Learned from Demo Day}
 
-\subsubsection{Competence-Enhancing vs. Competence-Destroying}
+The recent class Demo Day provided a harsh but necessary reality check regarding how the system is perceived versus how it was built. The live feedback highlighted several critical insights that directly reshaped our product positioning:
 
-Tushman and Nadler\parencite{tushman1986organizing} distinguish competence-enhancing innovations (build on existing skills) from competence-destroying ones (render expertise obsolete). Maverick-SORT is deliberately competence-enhancing: it does not eliminate the wave-planning role; it elevates it from manual grouping to strategic scenario analysis. Operation managers' intuition will become \textit{inputs} to the system (via the TZU heuristic and What-If parameters) rather than being discarded.
+\begin{itemize}
+    \item \textbf{What resonated most (The Architecture)}: The audience was highly engaged by the systemic relationships between different features---specifically how the underlying KGDRL algorithm directly fed into the user-facing ``Algorithm Arena'' and the AI Copilot explanations.
+    \item \textbf{What was ignored (The Visual Clutter)}: The complex data visualization dashboards based on live CSV uploads received almost no attention. Without sufficient presentation time to explain their specific operational contexts, they simply appeared as generic charts. This proved a harsh lesson: visual complexity does not inherently translate to perceived business value.
+    \item \textbf{The core skepticism (Product Identity)}: The most piercing critiques challenged the product's fundamental identity. Because the initial presentation was a generic ``feature walkthrough,'' evaluators rightly questioned: \textit{``What is the actual core value? What is the single selling point?''}
+\end{itemize}
 
-This positioning is central to our adoption strategy. Competence-destroying innovations face resistance from the very people who must adopt them. By framing KGDRL as ``rules, learned and optimized,'' we reduce organizational friction.
+\textbf{The Pivot (Shifting the Adoption Barrier)}: This skepticism revealed that our immediate adoption barrier was not technical, but narrative. This feedback directly drove the fundamental restructuring of Section 1 in this report. We abandoned the ``feature-list'' approach and optimized the product positioning into the ``Risk Reversal Engine.'' We learned that before a user cares about advanced data dashboards (the Pro Edition), they must first be convinced by a singular, zero-risk ROI validation (the Essential Edition).

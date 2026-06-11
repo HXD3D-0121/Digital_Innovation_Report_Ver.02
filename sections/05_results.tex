@@ -17,22 +17,17 @@
 
 \begin{enumerate}
     \item \textbf{Streamlit's real-time refresh is unreliable}. The \texttt{st.rerun()} mechanism causes page flicker and occasionally drops session state. For a true ``command center'' experience, a React or Vue frontend with WebSocket data push would be necessary---but that would sacrifice the zero-deployment advantage.
-    \item \textbf{The reward function is over-simplified}. Real warehouse costs include picker fatigue curves, conveyor belt saturation, and dynamic slotting---none of which are modeled. The simulation optimizes a proxy, not the ground truth. Moreover, the ultimate objective of operation management is not just simply reducing costs, but improving the comprehensive performance of the whole enterprise. Although I set up a multiple-objective Pareto optimizer in the Essential edition, trying to make a collective reward calculation in a single terminal, the parameters of the simulations are still not enough to capture the full complexity.
+    \item \textbf{The reward function is over-simplified}. The simulation optimizes a proxy, omitting real-world complexities like picker fatigue and conveyor saturation. While the Essential edition uses a multi-objective Pareto optimizer to target broader enterprise performance, its parameters remain insufficient to capture true operational ground truth.
     \item \textbf{Elements of the project are still not interactive enough}. One of the most essential performance measures of the project is the accessibility and interactability of different elements, which is inadequate in the current version.
 \end{enumerate}
 
-\subsection{Risk: Dependency on Models and Tools We Do Not Control}
+\subsection{Risk: Infrastructure Dependencies}
 
-Maverick-SORT depends on:
-\begin{itemize}
-    \item PyTorch (model training and inference)
-    \item Streamlit (UI framework)
-    \item Hugging Face Transformers (optional LLM explanations)
-    \item The GSP regulatory framework (business logic validity)
-\end{itemize}
+While Maverick-SORT demonstrates the value of KGDRL, the prototype remains dependent on lightweight development tools. Streamlit is suitable for rapid prototyping but may struggle with the responsiveness and scalability required in a real warehouse environment. Likewise, the AI Insight Engine depends on external LLM services, creating risks related to latency, rate limits, and service availability.
 
-If PyTorch 3.0 deprecates \texttt{nn.Module} patterns we rely on, or if Streamlit changes its theming API, the 4,000+ lines of AI-generated UI code would need human revision. \textit{Who would notice?} Currently, no one on the team has read every line of generated CSS. This is the orphaned codification risk identified by Jurowetzki\parencite{Jurowetzki2026}: the code works until it does not, and the expertise to fix it may not reside with the people who deploy it.
+These limitations do not undermine the feasibility of the concept, but they highlight the gap between a functional prototype and a production-ready system. A commercial deployment would require a more robust frontend architecture and dedicated AI infrastructure.
 
 \subsection{One Realistic Next Step}
 
-Rather than a list of ambitions, we propose a single next step: \textbf{a four-week paid pilot with one real warehouse}, collecting actual order data and picker feedback. The pilot would test not algorithmic performance (we can simulate that) but adoption dynamics: Does Wang Li return to the dashboard daily? Does she override recommendations, and when? Does she ask her manager for a budget? The answers would tell us whether the limiting condition is indeed champion bandwidth, or something we have not yet identified.
+Rather than adding new features, the next step should be a four-week pilot in a real warehouse. The objective is not to further validate the algorithm, but to test adoption behavior: whether managers regularly use the system, trust its recommendations, and integrate it into daily decision-making. This would provide direct evidence on whether organizational attention is indeed the primary barrier to adoption.
+

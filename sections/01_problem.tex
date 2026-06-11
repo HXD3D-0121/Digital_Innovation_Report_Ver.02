@@ -7,36 +7,130 @@
 
 \subsection{The User and the Problem}
 
-Based on the case offered by the professor, the main target users should be the operations director of a mid-sized pharmaceutical distribution warehouse in China, whose warehouse processes approximately 2,000 orders daily across 42,000 SKUs, with temperature requirements spanning ambient, cool, cold, and frozen categories. Every morning at 7:00 AM, the operations team will gather around a whiteboard to manually group orders into ``waves'' (batches) for coordinated picking. The rules they use are simple: group by temperature zone first, then by geographic proximity. They have done this for eight years.
+The primary target users for this system are operations directors of mid-sized pharmaceutical distribution warehouses in China. A typical user oversees a facility processing approximately 2,000 orders daily across 42,000 SKUs, with strict temperature requirements spanning ambient, cool, cold, and frozen categories. Every morning at 7:00 AM, the operations team gathers around a whiteboard to manually group orders into ``waves'' (batches) for coordinated picking. The rules they use are simple: group by temperature zone first, then by geographic proximity. They have relied on this manual heuristic for years.
 
-The problem is that this manual process is increasingly untenable. Three forces converge:
+This manual process is increasingly untenable due to three converging forces:
 
 \begin{enumerate}
-    \item \textbf{SKU complexity}: 38\% of SKUs are near-expiry managed items with varying temperature requirements; cross-zone contamination risks GSP (Good Supply Practice) violations\parencite{paxafe2025ai}.
-    \item \textbf{Order fragmentation}: Daily active customers exceed 1,200, mostly small-batch orders averaging 3--5 items, making manual grouping cognitively demanding.
-    \item \textbf{Peak volatility}: During flu seasons and promotional periods, order volume spikes to 280\% of baseline, overwhelming the whiteboard method.
+    \item \textbf{SKU complexity}: 38\% of SKUs are near-expiry managed items with varying temperature requirements; cross-zone contamination risks severe GSP (Good Supply Practice) regulatory violations\parencite{paxafe2025ai}.
+    \item \textbf{Order fragmentation}: Daily active customers exceed 1,200, mostly requiring small-batch orders averaging 3--5 items, making manual grouping cognitively demanding.
+    \item \textbf{Peak volatility}: During flu seasons and promotional periods, order volume spikes to 280\% of the baseline, overwhelming the whiteboard method entirely.
 \end{enumerate}
 
-What they need is a way to see, in five minutes, whether AI-driven wave allocation would actually save their money---before they commit to any integration.
+However, the ultimate barrier to solving this crisis is not algorithmic, but organizational. Most enterprise AI fails to be adopted not because the math is wrong, but because the cost of \textit{trying} it is too high. An operations director does not have a three-month IT budget or the political capital to pilot a black-box AI algorithm. What they need is a way to see, in exactly five minutes, whether AI-driven wave allocation would actually save money---before committing to any integration.
 
-\subsection{What the Product Does Today}
+% \subsection{Product Positioning: The Risk Reversal Engine}
 
-\textbf{Maverick-SORT} is a web-based decision-support tool for pharmaceutical wave allocation. It does not replace the users' existing Warehouse Management System (WMS). Instead, it sits alongside it, consuming order data and recommending wave compositions that minimize total operational cost while respecting temperature compliance and deadline constraints.
+% \textbf{Maverick-SORT} is not designed to replace an existing Warehouse Management System (WMS). It is an intelligent decision-support sandbox. Its core philosophy is \textbf{Risk Reversal}: allowing decision-makers to quantify the ROI of AI-driven scheduling without touching live production systems or requiring IT department approval.
 
-I built two versions, but the focus of this reflection is the \textbf{Essential Edition}---the version Wang Li would actually try first:
+% To address the adoption bottleneck, the product is structured into two deliberate tiers, outlining a clear commercial escalation path:
+
+% \begin{itemize}
+%     \item \textbf{Zero-Risk ROI Validation (Essential Edition)}: Built as a zero-deployment, browser-based tool, the Essential tier reduces a heavy ``organizational evaluation project'' to a five-minute ``What-If'' scenario simulation. It allows managers to test parameters (e.g., changing wave capacity from 20 to 15) on demo data and instantly view the projected cost savings, lowering the perceived risk of adoption to near zero.
+%     \item \textbf{Explainable AI for GSP Compliance (Algorithm Arena)}: In the heavily regulated pharmaceutical sector, black-box routing algorithms are un-deployable. Maverick-SORT places a Knowledge-Guided Deep Reinforcement Learning (KGDRL) core alongside five traditional heuristics (FCFS, TEMP\_FIRST, ZONE\_NN, EDD, TZU) in an ``Algorithm Arena.'' This transparently exposes the trade-offs between picking efficiency and GSP temperature compliance, keeping the human operations director firmly in the loop.
+%     \item \textbf{Scalable Enterprise Escalation (Pro Edition)}: Once trust is established via the Essential tier, the Pro Edition provides the tools for operational scale. It introduces a Data Hub for live CSV ingestion, an EWMA-based dynamic capacity adapter for peak volatility, and an NSGA-II multi-objective strategy optimizer, transforming the sandbox into a live command center.
+% \end{itemize}
+
+% The value proposition is singular and highly disciplined: \textit{verify the ROI and compliance safety first, commit to the AI integration second.}
+
+\subsection{Product Positioning: The Risk Reversal Engine}
+
+\textbf{Maverick-SORT} is not designed to replace an existing Warehouse Management System (WMS). It is an intelligent decision-support sandbox. Its core philosophy is \textbf{Risk Reversal}: allowing decision-makers to quantify the ROI of AI-driven scheduling without touching live production systems or requiring IT department approval.
+
+To address the adoption bottleneck, the product delivers three core business values, structured into a deliberate commercial escalation path:
 
 \begin{itemize}
-    \item \textbf{KGDRL Core Engine}: A Knowledge-Guided Deep Reinforcement Learning algorithm that learns to allocate orders to waves, guided by pharmaceutical-domain heuristics (temperature matching, zone proximity, earliest-due-date).
-    \item \textbf{Algorithm Arena}: A comparison dashboard showing how KGDRL performs against five rule-based baselines (FCFS, TEMP\_FIRST, ZONE\_NN, EDD, TZU) on metrics including picking distance, temperature violations, and deadline misses.
-    \item \textbf{What-If Scenario Simulator}: A parameter-sensitivity tool that lets Wang Li ask ``What if I change wave capacity from 20 to 15?'' and see the impact on cost and service level---without touching her live system.
+    \item \textbf{Zero-Risk ROI Validation (Essential Edition)}: Built as a zero-deployment, browser-based tool, the Essential tier reduces a heavy ``organizational evaluation project'' to a five-minute ``What-If'' scenario simulation. It allows managers to test parameters (e.g., changing wave capacity from 20 to 15) on demo data and instantly view the projected cost savings, lowering the perceived risk of adoption to near zero.
+    
+    \item \textbf{Explainable AI for GSP Compliance (Shared Core)}: In the heavily regulated pharmaceutical sector, black-box routing algorithms are un-deployable. Maverick-SORT places a Knowledge-Guided Deep Reinforcement Learning (KGDRL) core alongside five traditional heuristics (FCFS, TEMP\_FIRST, ZONE\_NN, EDD, TZU) in an ``Algorithm Arena.'' This transparently exposes the trade-offs between picking efficiency and GSP temperature compliance, keeping the human operations director firmly in the loop.
+    
+    \item \textbf{Scalable Enterprise Escalation (Pro Edition)}: Once trust is established via the Essential tier, the Pro Edition provides the tools for operational scale. It introduces an EWMA-based dynamic capacity adapter for peak volatility, comprehensive RAG root-cause analysis, and an NSGA-II multi-objective strategy optimizer, transforming the sandbox into a live command center.
 \end{itemize}
 
-The product is deliberately narrow. We resisted the temptation to build a full WMS replacement, an ERP connector, or a robotic control layer. The value proposition is singular: \textit{in five minutes, know whether AI scheduling is worth your money}.
+This architectural and commercial escalation---from the shared algorithmic base to the specialized Essential and Pro editions---is illustrated in Table~\ref{tab:edition_comparison}.
 
-\subsection{Guiding Question}
+% % --- 定义专属颜色 ---
+% \definecolor{essblue}{HTML}{3b82f6}
+% \definecolor{proorg}{HTML}{f59e0b}
+
+% % --- 开始绘制版本差异示意图 ---
+% \begin{figure}[htbp]
+% \centering
+% \begin{tikzpicture}[
+%     box/.style={draw=black, thick, rounded corners, align=center, inner sep=8pt},
+%     core/.style={box, fill=gray!10, minimum width=14.5cm},
+%     essential/.style={box, draw=essblue, fill=essblue!10, minimum width=6.5cm, minimum height=3.2cm},
+%     pro/.style={box, draw=proorg, fill=proorg!10, minimum width=6.5cm, minimum height=3.2cm},
+%     arrow/.style={->, very thick, >=stealth}
+% ]
+
+% % 底层共享基座 (Shared Core)
+% \node[core] (base) at (0, 0) {
+%     \textbf{Shared Algorithmic Core \& GSP Compliance} \\
+%     KGDRL Framework \quad $|\quad$ Explainable AI Copilot \quad $|\quad$ Algorithm Arena
+% };
+
+% % 基础版 (Essential Tier)
+% \node[essential] (essential) at (-3.7, 3.5) {
+%     \textbf{\Large Essential Edition} \\
+%     \textit{Zero-Risk ROI Validation} \\[0.3cm]
+%     \textbf{Scheduling:} What-If Scenario Lab \\
+%     \textbf{Scale:} Single-Warehouse Sandbox
+% };
+
+% % 专业版 (Pro Tier)
+% \node[pro] (pro) at (3.7, 3.5) {
+%     \textbf{\Large Pro Edition} \\
+%     \textit{Enterprise Scale \& Multi-Objective} \\[0.3cm]
+%     \textbf{Scheduling:} NSGA-II Pareto Optimizer \\
+%     \textbf{Scale:} Live Adaptive Intelligence
+% };
+
+% % 连接线与箭头
+% \draw[arrow, dashed] (base.north -| essential) -- (essential.south);
+% \draw[arrow, dashed] (base.north -| pro) -- (pro.south);
+% \draw[arrow] (essential.east) -- (pro.west) node[midway, above] {\textbf{Scale-Up}};
+
+% \end{tikzpicture}
+% \caption{Commercial Escalation Matrix: From Essential Validation to Pro Enterprise Scale}
+% \label{fig:tier_diff}
+% \end{figure}
+% --- 示意图结束 ---
+
+% --- 核心差异对比表格 ---
+\begin{table}[htbp]
+\centering
+\caption{Feature Comparison: Essential vs. Pro Edition}
+\label{tab:edition_comparison}
+\begin{tabular}{p{3.5cm} p{5.5cm} p{6.0cm}}
+\hline
+\textbf{Dimension} & \textbf{Essential Edition (v7.0)} & \textbf{Pro Edition (v5.0)} \\
+\hline
+\textbf{Positioning} & Decision-support sandbox for transparent algorithm validation. & Operational command center for enterprise scaling. \\
+\textbf{Core Scheduling} & KGDRL Engine alongside traditional baselines (Algorithm Arena). & \textbf{NSGA-II Multi-Objective Optimizer} balancing Cost, Timeliness, and Compliance. \\
+\textbf{Dynamic Adaptation} & Static evaluation parameters in What-If scenarios. & \textbf{EWMA Adaptive Intelligence} for real-time capacity and peak volatility adjustment. \\
+\textbf{Generative AI} & AI Insight Engine for routing benchmark explanations. & Comprehensive RAG Root Cause Analysis \& Time-Series Demand Forecasting. \\
+\textbf{Architecture} & Single-node operation focus. & Federated Learning Hub to support multi-warehouse synergy without data sharing. \\
+\hline
+\end{tabular}
+\end{table}
+% --- 表格结束 ---
+
+The value proposition behind this two-tiered strategy is singular and highly disciplined: \textit{verify the algorithmic performance and compliance safety first, commit to the multi-objective enterprise scale second.}
+
+Although the original casebook also suggested inventory scheduling and near-expiry management functionalities, we intentionally concentrated on wave allocation and simulation because these represent the highest operational bottleneck and could be developed into a functioning prototype within the course timeframe.
+
+\subsection{Guiding Thesis and Question}
 
 This document asks: \textbf{What most limits Maverick-SORT from reaching real use by pharmaceutical warehouse operators, and what does building it teach us about working with AI?}
 
-The sections that follow each help answer this question. Section~\ref{sec:architecture} describes the technical choices and their consequences. Section~\ref{sec:building} examines where we handed work to the AI agent and where our own judgment did the real work. Section~\ref{sec:theory} connects the build process and the product to course theory along two threads: AI and work, and adoption and diffusion. Section~\ref{sec:results} assesses what works, what does not, and what comes next.
+A central thesis emerged throughout the project: \textbf{the primary bottleneck to enterprise AI adoption is not algorithm quality, but organizational attention.}
 
-\rqbox{What most limits Maverick-SORT from reaching real use by pharmaceutical warehouse operators, and what does building it teach us about working with AI?}
+The challenge is not whether the technology works. Rather, it is whether an already overloaded operations manager has the time, attention, and confidence to evaluate a new system. This insight shaped every major design decision, from the browser-based Essential Edition to the five-minute What-If simulator and free-trial model.
+
+The sections that follow examine how this adoption bottleneck influenced both the product design and our experience of building with AI.
+
+\rqbox{Guiding Thesis: The primary bottleneck to enterprise AI adoption is not algorithm quality, but organizational attention.}
+
+
+% \rqbox{What most limits Maverick-SORT from reaching real use by pharmaceutical warehouse operators, and what does building it teach us about working with AI?}
