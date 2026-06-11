@@ -7,6 +7,8 @@
 
 \subsection{Algorithm: Knowledge-Guided Deep Reinforcement Learning}
 
+The architecture was designed to support the project's central challenge: reducing the organizational barriers that prevent warehouse managers from adopting AI-assisted decision making. The technical components therefore serve as enablers of trust, trialability, and visible business value rather than ends in themselves.
+
 The dynamic reconfiguration scheduling problem for Personalized Customization Tasks (CPP) is formulated as a Markov Decision Process (MDP). 
 
 \textbf{State space} encodes features for all machine and task nodes, including working state, idle time, reachable nodes, time utilization, stage count, and processing speed.
@@ -22,6 +24,8 @@ The core algorithmic contribution is the \textbf{KGDRL architecture}, which inte
     \item \textbf{Knowledge Guidance Network}: Employs an L1 norm activation and IF-THEN heuristics (prioritizing shorter reconfiguration times and heavier workloads) to balance exploration and exploitation.
     \item \textbf{PPO Optimization}: Utilizes an Actor-Critic deep network structure with clipped objectives to ensure stable and convergent policy updates.
 \end{enumerate}
+
+While KGDRL provides the technical foundation of Maverick-SORT, the project ultimately demonstrated that algorithmic capability alone is insufficient for real-world impact. The more significant challenge was designing a system that managers could understand, evaluate, and trust within the constraints of their daily work. In this sense, the algorithm is a necessary component of the solution, but not the primary determinant of adoption.
 
 % \subsection{Why KGDRL, Not Vanilla PPO or Pure Rules?}
 
@@ -48,6 +52,9 @@ The main barrier to AI adoption in warehouse operations is rarely algorithmic ac
 \end{itemize}
 
 The design principle is simple: adoption depends less on whether the algorithm is marginally better, and more on whether decision-makers can understand it, try it safely, and see clear value from using it.
+
+% While KGDRL provides the technical foundation of Maverick-SORT, the project ultimately demonstrated that algorithmic capability alone is insufficient for real-world impact. The more significant challenge was designing a system that managers could understand, evaluate, and trust within the constraints of their daily work. In this sense, the algorithm is a necessary component of the solution, but not the primary determinant of adoption.
+
 
 \subsection{Technology Stack}
 

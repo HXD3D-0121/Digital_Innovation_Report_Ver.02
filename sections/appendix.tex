@@ -11,11 +11,12 @@
 
 To facilitate evaluation and reproducibility, the key project access information is summarized below.
 
-\subsection*{Project Overview}
+\subsection{Project Overview}
 
 \textbf{Project Name:} Maverick-SORT
 
-The project name is inspired by the call sign ``Maverick'' from the \textit{Top Gun} film series, reflecting the system's objective of supporting fast and adaptive operational decision-making in complex environments.
+The project name is inspired by the call sign ``Maverick'' from the \textit{Top Gun} film series, reflecting the system's objective of supporting fast and adaptive operational decision-making in complex environments. A Github link is also avaliable for this report: 
+\textcolor{blue}{\url{https://github.com/HXD3D-0121/Digital_Innovation_Report_Ver.02}}
 
 % \subsection*{Source Code Repository}
 
@@ -25,20 +26,18 @@ The project name is inspired by the call sign ``Maverick'' from the \textit{Top 
 
 % The repository contains all source code, datasets, configuration files, and documentation required to reproduce the prototype.
 
-\subsection*{Prototype Access}
+\subsection{Prototype Access}
 
 Two prototype versions were developed and deployed:
 
 \begin{itemize}
 \item \textbf{Essential Edition}
 
-```
 \url{https://appappv7py-2jdt5edznzt56z663phvsh.streamlit.app/}
 
 \item \textbf{Professional Edition}
 
 \url{https://appappprov5py-trwbxkskxdrjmvlfddahjw.streamlit.app/}
-```
 
 \end{itemize}
 
@@ -49,13 +48,13 @@ For optimal visualization, the Streamlit applications should be viewed using the
 
 \textit{Note: As both applications are research prototypes, occasional instability or unexpected runtime errors may occur. If those two APPs fall asleep, please contact me to wake them up.}
 
-\subsection*{Backup Demonstration Recording}
+\subsection{Backup Demonstration Recording}
 
 A backup video demonstration is provided in case deployment services become unavailable during assessment:
 
 \url{https://drive.google.com/file/d/1pLonRq-IE0ts2WdB4Mpw1rBiWcq-k8DO/view?usp=drive_link}
 
-\subsection*{Source Code Repository}
+\subsection{Source Code Repository}
 
 \textbf{GitHub Repository:}
 
@@ -93,7 +92,7 @@ Pricing strategy, deployment guides, feasibility analyses, competitor reviews, a
 
 \end{itemize}
 
-\subsection*{Software Environment}
+\subsection{Software Environment}
 
 The prototype was developed, tested, and deployed under the following environment:
 
@@ -109,30 +108,93 @@ All dependencies, datasets, and deployment configurations are included in the re
 
 \clearpage
 
-
-\section{Product Architecture}
+\section{Product Architecture: From AI Engine to Business Value}
 \label{app:architecture}
+
+Before describing the technical architecture, it is important to clarify that the purpose of Maverick-SORT is not to demonstrate a novel reinforcement learning algorithm. The architecture was designed to support the project's central challenge: reducing the organizational barriers that prevent warehouse managers from adopting AI-assisted decision making. The technical components therefore serve as enablers of trust, trialability, and visible business value rather than ends in themselves.
+
+Maverick-SORT is designed as a three-layer architecture that separates infrastructure, intelligence, and business value. This modular structure enables users to evaluate the system without complex integration efforts, supporting the low-friction adoption strategy discussed throughout the report.
 
 \begin{figure}[htbp]
 \centering
-\fbox{\parbox{0.9\textwidth}{
-\centering
-\vspace{0.3cm}
-\textbf{Maverick-SORT Essential Architecture}
-\vspace{0.2cm}
+\fbox{\parbox{0.95\textwidth}{
 
-\texttt{orders.csv .etc} / demo data
-$\rightarrow$ \texttt{DataGenerator} / upload router
-$\rightarrow$ \texttt{PharmaWaveEnv} (MDP environment)
-$\rightarrow$ \texttt{KnowledgeGuidedPPO} (GAT + PPO + KL)
-$\rightarrow$ \texttt{WhatIfSimulator} (scenario comparison)
-$\rightarrow$ \texttt{Streamlit Dashboard} (Algorithm Arena + visualizations)
+\textbf{Layer 3: Business Value Layer}
 
-\vspace{0.3cm}
+\begin{center}
+What-If Simulator \hspace{0.8cm}
+Algorithm Arena \hspace{0.8cm}
+Strategy Optimizer
+\end{center}
+
+$\uparrow$
+
+\textbf{Layer 2: Intelligence Layer}
+
+\begin{center}
+Knowledge-Guided DRL Engine
+(KGDRL + PPO + Domain Heuristics)
+\end{center}
+
+$\uparrow$
+
+\textbf{Layer 1: Data & Infrastructure Layer}
+
+\begin{center}
+Demo Generator \hspace{0.8cm}
+Live Warehouse Data \hspace{0.8cm}
+AI Copilot Services
+\end{center}
+
 }}
-\caption{Simplified system architecture. Solid lines indicate data flow; dashed lines indicate optional LLM explanations via Hugging Face.}
-\label{fig:arch}
+\caption{Three-layer architecture of Maverick-SORT. The design separates infrastructure, intelligence, and business applications, allowing users to validate value before committing to system integration.}
+\label{fig:layered_arch}
 \end{figure}
+
+\subsection*{Architecture-to-Value Mapping}
+
+The architecture directly supports the adoption strategy presented in the main text.
+
+\begin{itemize}
+\item \textbf{Infrastructure Layer (Low-Friction Entry).}
+
+```
+The coexistence of demo data and live data pipelines allows users to evaluate the system without integrating production systems, enabling rapid experimentation and reducing adoption risk.
+
+\item \textbf{Intelligence Layer (Trustworthy Optimization).}
+
+The KGDRL engine combines reinforcement learning with domain heuristics, ensuring that recommendations remain aligned with established warehouse practices rather than operating as an opaque black box.
+
+\item \textbf{Business Value Layer (Visible ROI).}
+
+Technical outputs are translated into operational decisions through simulation, strategy comparison, and KPI trade-off analysis, helping managers understand the practical value of the system.
+```
+
+\end{itemize}
+
+% \section{Product Architecture}
+% \label{app:architecture}
+
+% \begin{figure}[htbp]
+% \centering
+% \fbox{\parbox{0.9\textwidth}{
+% \centering
+% \vspace{0.3cm}
+% \textbf{Maverick-SORT Essential Architecture}
+% \vspace{0.2cm}
+
+% \texttt{orders.csv .etc} / demo data
+% $\rightarrow$ \texttt{DataGenerator} / upload router
+% $\rightarrow$ \texttt{PharmaWaveEnv} (MDP environment)
+% $\rightarrow$ \texttt{KnowledgeGuidedPPO} (GAT + PPO + KL)
+% $\rightarrow$ \texttt{WhatIfSimulator} (scenario comparison)
+% $\rightarrow$ \texttt{Streamlit Dashboard} (Algorithm Arena + visualizations)
+
+% \vspace{0.3cm}
+% }}
+% \caption{Simplified system architecture. Solid lines indicate data flow; dashed lines indicate optional LLM explanations via Hugging Face.}
+% \label{fig:arch}
+% \end{figure}
 
 
 % \section{Key Screenshots}
@@ -249,7 +311,7 @@ where $S_1$ and $S_2$ represent the heuristic scores for reconfiguration time an
 % \end{itemize}
 
 \subsection{Baseline Performance Comparison}
-The KGDRL architecture was evaluated against both traditional heuristics and established DRL algorithms across varying instance scales[cite: 2]. To visually substantiate the algorithm's stability and superiority, the training convergence and standard makespan comparisons are presented below:
+The KGDRL architecture was evaluated against both traditional heuristics and established DRL algorithms across varying instance scales. To visually substantiate the algorithm's stability and superiority, the training convergence and standard makespan comparisons are presented below:
 
 \begin{figure}[htbp]
     \centering
@@ -269,9 +331,9 @@ The KGDRL architecture was evaluated against both traditional heuristics and est
 \end{figure}
 
 \begin{itemize}
-    \item \textbf{Heuristic Baselines}: Included Random, FIFO, and MWKR (Most Work Remain)[cite: 2]. While MWKR performs decently on small scales, heuristics universally fail to adapt to dynamic reconfiguration times, resulting in suboptimal makespans[cite: 2].
-    \item \textbf{DRL Baselines (A2C, DDPG, DDQN)}: As illustrated in Figure~\ref{fig:standard_makespan}, A2C and DDPG exhibited severe training volatility, failing to converge on complex instances with standard makespans frequently exceeding 800[cite: 2]. Furthermore, these makespans increased significantly as instance dimensionality grew[cite: 2]. While DDQN performed adequately on 5-machine instances, its performance degraded significantly below MWKR on 10-machine high-dimensional instances[cite: 2].
-    \item \textbf{KGDRL Superiority}: As shown in Figure~\ref{fig:kgdrl_training}, KGDRL demonstrated rapid and stable convergence within the first 200 iterations across all 6 instance sizes[cite: 2]. By balancing RL exploration with heuristic knowledge injection, it consistently outperformed both the best heuristic (MWKR) and stable DRLs (DDQN), proving its scalability and robustness for enterprise environments[cite: 2].
+    \item \textbf{Heuristic Baselines}: Included Random, FIFO, and MWKR (Most Work Remain). While MWKR performs decently on small scales, heuristics universally fail to adapt to dynamic reconfiguration times, resulting in suboptimal makespans.
+    \item \textbf{DRL Baselines (A2C, DDPG, DDQN)}: As illustrated in Figure~\ref{fig:standard_makespan}, A2C and DDPG exhibited severe training volatility, failing to converge on complex instances with standard makespans frequently exceeding 800. Furthermore, these makespans increased significantly as instance dimensionality grew. While DDQN performed adequately on 5-machine instances, its performance degraded significantly below MWKR on 10-machine high-dimensional instances.
+    \item \textbf{KGDRL Superiority}: As shown in Figure~\ref{fig:kgdrl_training}, KGDRL demonstrated rapid and stable convergence within the first 200 iterations across all 6 instance sizes. By balancing RL exploration with heuristic knowledge injection, it consistently outperformed both the best heuristic (MWKR) and stable DRLs (DDQN), proving its scalability and robustness for enterprise environments.
 \end{itemize}
 
 \subsection{KGDRL Algorithm Pseudocode}

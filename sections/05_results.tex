@@ -5,19 +5,19 @@
 
 \section{Results, Limitations, and Further Opportunities}\label{sec:results}
 
-\subsection{What Works}
+\subsection{What I Validated}
 
 \begin{enumerate}
-    \item \textbf{KGDRL outperforms baselines on distance}. In 20 simulated episodes, KGDRL achieves average picking distance of 665.7 meters vs. 666.7 for TZU and 690.9 for FCFS. The GAT encoder's ability to learn zone-proximity relationships is validated.
+    \item \textbf{KGDRL Adoption Validation}. The most important outcome of the project was not the absolute performance of KGDRL, but the insight gained about AI adoption. Although the optimization results demonstrated that the proposed approach was technically viable, the project repeatedly revealed that organizational attention, rather than algorithm quality, represented the primary constraint on real-world deployment.
     \item \textbf{The What-If simulator reduces perceived risk}. In informal testing with supply-chain classmates, users who interacted with the scenario simulator reported higher willingness-to-try than those who only saw static benchmark tables.
-    \item \textbf{The Essential/Pro tiering clarifies value}. Separating ``try before you buy'' (Essential) from ``enterprise resilience'' (Pro) prevents feature bloat from confusing the core message.
+    % \item \textbf{The Essential/Pro tiering clarifies value}. Separating ``try before you buy'' (Essential) from ``enterprise resilience'' (Pro) prevents feature bloat from confusing the core message.
 \end{enumerate}
 
 \subsection{What Are Still Not Good Enough}
 
 \begin{enumerate}
-    \item \textbf{Streamlit's real-time refresh is unreliable}. The \texttt{st.rerun()} mechanism causes page flicker and occasionally drops session state. For a true ``command center'' experience, a React or Vue frontend with WebSocket data push would be necessary---but that would sacrifice the zero-deployment advantage.
-    \item \textbf{The reward function is over-simplified}. The simulation optimizes a proxy, omitting real-world complexities like picker fatigue and conveyor saturation. While the Essential edition uses a multi-objective Pareto optimizer to target broader enterprise performance, its parameters remain insufficient to capture true operational ground truth.
+    \item \textbf{Streamlit's real-time refresh is unreliable}. The \texttt{st.rerun()} mechanism causes page flicker and occasionally drops session state. 
+    \item \textbf{The reward function is over-simplified}. The simulation optimizes a proxy, omitting real-world complexities like picker fatigue and conveyor saturation. 
     \item \textbf{Elements of the project are still not interactive enough}. One of the most essential performance measures of the project is the accessibility and interactability of different elements, which is inadequate in the current version.
 \end{enumerate}
 
@@ -27,7 +27,7 @@ While Maverick-SORT demonstrates the value of KGDRL, the prototype remains depen
 
 These limitations do not undermine the feasibility of the concept, but they highlight the gap between a functional prototype and a production-ready system. A commercial deployment would require a more robust frontend architecture and dedicated AI infrastructure.
 
-\subsection{One Realistic Next Step}
+\subsection{Next Step}
 
 Rather than adding new features, the next step should be a four-week pilot in a real warehouse. The objective is not to further validate the algorithm, but to test adoption behavior: whether managers regularly use the system, trust its recommendations, and integrate it into daily decision-making. This would provide direct evidence on whether organizational attention is indeed the primary barrier to adoption.
 
