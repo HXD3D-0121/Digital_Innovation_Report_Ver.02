@@ -1,0 +1,42 @@
+% ============================================================
+% 01_problem.tex
+% Section 1: Problem and Product Grounding
+% ============================================================
+
+\section{Problem and Product Grounding}
+
+\subsection{The User and the Problem}
+
+Based on the case offered by the professor, the main target users should be the operations director of a mid-sized pharmaceutical distribution warehouse in China, whose warehouse processes approximately 2,000 orders daily across 42,000 SKUs, with temperature requirements spanning ambient, cool, cold, and frozen categories. Every morning at 7:00 AM, the operations team will gather around a whiteboard to manually group orders into ``waves'' (batches) for coordinated picking. The rules they use are simple: group by temperature zone first, then by geographic proximity. They have done this for eight years.
+
+The problem is that this manual process is increasingly untenable. Three forces converge:
+
+\begin{enumerate}
+    \item \textbf{SKU complexity}: 38\% of SKUs are near-expiry managed items with varying temperature requirements; cross-zone contamination risks GSP (Good Supply Practice) violations\parencite{paxafe2025ai}.
+    \item \textbf{Order fragmentation}: Daily active customers exceed 1,200, mostly small-batch orders averaging 3--5 items, making manual grouping cognitively demanding.
+    \item \textbf{Peak volatility}: During flu seasons and promotional periods, order volume spikes to 280\% of baseline, overwhelming the whiteboard method.
+\end{enumerate}
+
+What they need is a way to see, in five minutes, whether AI-driven wave allocation would actually save their money---before they commit to any integration.
+
+\subsection{What the Product Does Today}
+
+\textbf{Maverick-SORT} is a web-based decision-support tool for pharmaceutical wave allocation. It does not replace the users' existing Warehouse Management System (WMS). Instead, it sits alongside it, consuming order data and recommending wave compositions that minimize total operational cost while respecting temperature compliance and deadline constraints.
+
+I built two versions, but the focus of this reflection is the \textbf{Essential Edition}---the version Wang Li would actually try first:
+
+\begin{itemize}
+    \item \textbf{KGDRL Core Engine}: A Knowledge-Guided Deep Reinforcement Learning algorithm that learns to allocate orders to waves, guided by pharmaceutical-domain heuristics (temperature matching, zone proximity, earliest-due-date).
+    \item \textbf{Algorithm Arena}: A comparison dashboard showing how KGDRL performs against five rule-based baselines (FCFS, TEMP\_FIRST, ZONE\_NN, EDD, TZU) on metrics including picking distance, temperature violations, and deadline misses.
+    \item \textbf{What-If Scenario Simulator}: A parameter-sensitivity tool that lets Wang Li ask ``What if I change wave capacity from 20 to 15?'' and see the impact on cost and service level---without touching her live system.
+\end{itemize}
+
+The product is deliberately narrow. We resisted the temptation to build a full WMS replacement, an ERP connector, or a robotic control layer. The value proposition is singular: \textit{in five minutes, know whether AI scheduling is worth your money}.
+
+\subsection{Guiding Question}
+
+This document asks: \textbf{What most limits Maverick-SORT from reaching real use by pharmaceutical warehouse operators, and what does building it teach us about working with AI?}
+
+The sections that follow each help answer this question. Section~\ref{sec:architecture} describes the technical choices and their consequences. Section~\ref{sec:building} examines where we handed work to the AI agent and where our own judgment did the real work. Section~\ref{sec:theory} connects the build process and the product to course theory along two threads: AI and work, and adoption and diffusion. Section~\ref{sec:results} assesses what works, what does not, and what comes next.
+
+\rqbox{What most limits Maverick-SORT from reaching real use by pharmaceutical warehouse operators, and what does building it teach us about working with AI?}

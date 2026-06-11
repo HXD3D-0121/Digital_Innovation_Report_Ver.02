@@ -1,0 +1,64 @@
+% ============================================================
+% appendix.tex
+% Appendices: Architecture Diagram and Screenshots
+% ============================================================
+
+\appendix
+\section{Product Architecture}
+\label{app:architecture}
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\vspace{0.3cm}
+\textbf{Maverick-SORT Essential Architecture}
+\vspace{0.2cm}
+
+\texttt{orders.csv .etc} / demo data
+$\rightarrow$ \texttt{DataGenerator} / upload router
+$\rightarrow$ \texttt{PharmaWaveEnv} (MDP environment)
+$\rightarrow$ \texttt{KnowledgeGuidedPPO} (GAT + PPO + KL)
+$\rightarrow$ \texttt{WhatIfSimulator} (scenario comparison)
+$\rightarrow$ \texttt{Streamlit Dashboard} (Algorithm Arena + visualizations)
+
+\vspace{0.3cm}
+}}
+\caption{Simplified system architecture. Solid lines indicate data flow; dashed lines indicate optional LLM explanations via Hugging Face.}
+\label{fig:arch}
+\end{figure}
+
+
+\section{Key Screenshots}
+\label{app:screenshots}
+
+\textit{Note: The following screenshots are placeholders for the final submission. High-resolution versions will be included in the PDF appendix.}
+
+\begin{enumerate}
+    \item \textbf{Algorithm Arena}: Comparison of KGDRL vs. baselines on reward, picking distance, and temperature violations.
+    \item \textbf{What-If Scenario Simulator}: Parameter sweep showing cost sensitivity to wave capacity changes.
+    \item \textbf{Real-Time Simulation}: Streamlit dashboard displaying wave composition, zone coverage, and compliance status.
+\end{enumerate}
+
+
+\section{PPO Hyperparameters}
+\label{app:hyperparams}
+
+\begin{table}[htbp]
+\centering
+\caption{Final PPO Hyperparameters}
+\begin{tabular}{ll}
+\hline
+Parameter & Value \\
+\hline
+Actor learning rate & $5 \times 10^{-4}$ \\
+Critic learning rate & $1 \times 10^{-5}$ \\
+Discount factor $\gamma$ & 0.96 \\
+GAE lambda & 0.95 \\
+PPO clip $\epsilon$ & 0.2 \\
+Hidden dimension & 128 \\
+Training episodes & 120 \\
+KL constraint weight $\lambda_{\text{kg}}$ & 0.1 \\
+\hline
+\end{tabular}
+\end{table}

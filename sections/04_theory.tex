@@ -1,0 +1,76 @@
+% ============================================================
+% 04_theory.tex
+% Section 4: Theoretical Reflection
+% ============================================================
+
+\section{Theoretical Reflection}\label{sec:theory}
+
+\subsection{AI and Work: Augmentation, Automation, and the Jagged Frontier}
+
+\subsubsection{The Jagged Frontier in Practice}
+
+Dell'Acqua et al.\parencite{DellAcqua2026} introduce the ``jagged technological frontier'' to describe how AI assistance improves performance on some tasks while degrading it on others, even within the same knowledge workflow and at similar perceived difficulty. Our build process is a case study in navigating this frontier.
+
+\textbf{Inside the frontier} (AI helped):
+\begin{itemize}
+    \item Boilerplate Python class definitions, docstrings, and type hints.
+    \item LaTeX equation formatting and notation tables.
+    \item Multi-language UI translation (200+ terms from Chinese to pharmaceutical-logistics English).
+    \item CSS animation and responsive layout code.
+\end{itemize}
+
+\textbf{Outside the frontier} (AI harmed or misled):
+\begin{itemize}
+    \item Dependency management for Cloud deployment: the AI added \texttt{torchvision} to solve a symptom, not the cause.
+    \item Reward function tuning: initial $\alpha_{\text{setup}} = 5.0$ produced too many small waves; the AI did not recognize the behavioral pattern without human specification.
+    \item Product positioning: the AI's natural tendency was to add features (Pro edition with NSGA-II, federated learning, 3D visualizations). Left unchecked, this would have produced a bloated product with no clear entry point.
+\end{itemize}
+
+The last point connects directly to Shipper's argument in ``After Automation''\parencite{shipper2026after}. Shipper observes that AI commoditizes the ``residue of human expertise---whatever can be made explicit enough to train on.'' This collapses the value of default model output and creates demand for what is different. In our case, the AI could generate feature after feature, but it could not determine which features Wang Li would actually pay for. That judgment---\textit{what is scarce when execution is cheap}\parencite{shipper2026after}---remained human.
+
+\subsubsection{Knowledge Codification and Its Risks}
+
+Jurowetzki\parencite{Jurowetzki2026}, building on Cowan et al.\parencite{cowan2000codification}, decomposes codification into four capacities: encoding, evaluation, maintenance, and revision. AI dramatically lowers encoding costs (writing code, generating documentation), but it raises maintenance and revision costs in subtle ways.
+
+Consider our \texttt{requirements.txt}. The AI encoded dependencies quickly. But when the Cloud environment changed underneath us---when \texttt{transformers} introduced a new internal scan behavior, when \texttt{torchvision}'s version pinning shifted---\textit{who evaluated and revised the encoded knowledge}? The answer was: the human, because the AI had no model of Streamlit Cloud's container behavior.
+
+This generates what Jurowetzki calls \textbf{orphaned codification}: artifacts whose premises no one can contest. Our codebase contains 4,000+ lines of AI-generated Streamlit dashboard code. If Streamlit 2.0 deprecates \texttt{st.dataframe} or changes its theming API, who on our team would notice? The person who originally specified the UI layout---but that person is not necessarily the one who can trace through 1,700 lines of generated CSS.
+
+\subsubsection{Augmentation vs. Automation}
+
+Raisch and Krakowski\parencite{raisch2021automation} frame the ``automation-augmentation paradox'': AI systems that automate routine tasks may simultaneously create demand for higher-level human judgment. Maverick-SORT is designed as an augmentation tool, not an automation replacement. Wang Li remains the decision-maker; the system recommends but does not execute. The What-If simulator is deliberately named a ``simulator,'' not an ``optimizer,'' to signal that the human must still choose.
+
+This design choice has a cost: it limits the system's immediate efficiency gains. A full automation integration could push wave decisions directly to pickers' handheld devices. But it also limits adoption risk: operation managers do not need to trust a black box; they need to trust a transparent recommendation they can override.
+
+\subsection{Adoption and Diffusion: Why Would Operation Manager Use This?}
+
+\subsubsection{TOE Framework Analysis}
+
+The Technology-Organization-Environment (TOE) framework\parencite{Tornatzky1990, baker2012toe} identifies three contexts that influence technology adoption. Table~\ref{tab:toe} applies it to Maverick-SORT.
+
+\begin{table}[htbp]
+\centering
+\caption{TOE Analysis for Maverick-SORT Adoption}
+\label{tab:toe}
+\begin{tabular}{p{2.5cm}p{4.5cm}p{5cm}}
+\hline
+Context & Factor & Assessment \\
+\hline
+\textbf{Technology} & Compatibility, complexity, relative advantage & High compatibility (standalone, no ERP integration); low complexity (browser-based); clear relative advantage (15--25\% cost reduction in simulations) \\
+\textbf{Organization} & Size, slack, champion presence & Mid-sized warehouse; limited IT slack \\
+\textbf{Environment} & Competition, regulation, supplier pressure & Intense competition from 3PLs; GSP regulation creates compliance pressure; no dominant supplier forcing adoption \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{The Single Most Limiting Condition}
+
+If we must name \textit{one} condition that most limits adoption, it is \textbf{organizational champion bandwidth}. Operation managers will be easily overwhelmed when disposing of hundreds of thousands of tasks at the same time. They may not have a dedicated IT team to evaluate pilot systems. The Essential Edition's entire design---zero installation, five-minute What-If demos, free 30-day trial---is an attempt to reduce the champion's activation energy to near zero.
+
+But even that may not be enough. The TOE framework reminds us that slack resources---time, attention, political capital---are adoption enablers\parencite{baker2012toe}. In a mid-sized warehouse operating on thin margins, the absence of a ``pilot budget'' (not financial, but attentional) is the binding constraint. This is why our pricing includes a 30-day free trial: not because the marginal cost is zero, but because the \textit{perceived risk} must be zero for the champion to engage.
+
+\subsubsection{Competence-Enhancing vs. Competence-Destroying}
+
+Tushman and Nadler\parencite{tushman1986organizing} distinguish competence-enhancing innovations (build on existing skills) from competence-destroying ones (render expertise obsolete). Maverick-SORT is deliberately competence-enhancing: it does not eliminate the wave-planning role; it elevates it from manual grouping to strategic scenario analysis. Operation managers' intuition will become \textit{inputs} to the system (via the TZU heuristic and What-If parameters) rather than being discarded.
+
+This positioning is central to our adoption strategy. Competence-destroying innovations face resistance from the very people who must adopt them. By framing KGDRL as ``rules, learned and optimized,'' we reduce organizational friction.

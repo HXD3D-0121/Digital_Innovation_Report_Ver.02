@@ -1,0 +1,59 @@
+% ============================================================
+% 02_architecture.tex
+% Section 2: Technical Architecture and Choices
+% ============================================================
+
+\section{Technical Architecture and Choices}\label{sec:architecture}
+
+\subsection{Algorithm: Knowledge-Guided Deep Reinforcement Learning}
+
+The wave allocation problem is a sequential decision problem under uncertainty. Orders arrive stochastically over time; at each decision point, the system must either add an order to the current wave or close the wave and dispatch it for picking. We formulate this as a finite-horizon Markov Decision Process $M = (\mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma)$.
+
+\textbf{State space} $\mathcal{S}$ encodes: (i) the current wave's composition (order count, volume, zone coverage, temperature coverage); (ii) the top-$K$ candidate orders from the pool, ranked by deadline urgency; (iii) temporal features (arrival rate, shift time remaining); and (iv) historical statistics (cumulative distance, violations).
+
+\textbf{Action space} $\mathcal{A}$ comprises: (a) adding a specific candidate order to the active wave, or (b) closing the wave and opening a new one.
+
+\textbf{Reward function} combines four components:
+\begin{equation}
+    r(s_t, a_t) = -\alpha_{\text{eff}} \cdot \Delta L - \alpha_{\text{temp}} \cdot \mathbb{1}_{[\text{violation}]} - \alpha_{\text{deadline}} \cdot \max(0, t_{\text{finish}} - d_o) - \alpha_{\text{setup}} \cdot \mathbb{1}_{[a_t = \text{CLOSE}]}
+\end{equation}
+where $\Delta L$ is estimated picking distance increment, and the indicator terms penalize temperature violations, deadline misses, and wave setup costs respectively.
+
+The core algorithmic contribution is the \textbf{KGDRL architecture}, which integrates three mechanisms:
+
+\begin{enumerate}
+    \item \textbf{Graph Attention Network (GAT) encoder}: The state is represented as a heterogeneous graph with nodes for orders, zones, temperature categories, and the current wave. A two-layer GAT learns attention-weighted embeddings that capture spatial and thermal relationships\parencite{liu2024dynamic, sun2024gat}.
+    \item \textbf{Knowledge injection via KL divergence}: A pre-trained heuristic (TZU: Temperature-Zone-Urgency) generates demonstration trajectories. During PPO training, a KL-divergence term $D_{\text{KL}}(\pi_\theta \| \pi_{\text{TZU}})$ constrains the policy to stay close to domain expertise, ensuring GSP-compliance rules are not forgotten during exploration.
+    \item \textbf{Behavioral cloning pre-training}: The Actor network is warm-started via behavioral cloning on TZU demonstrations before PPO fine-tuning, accelerating convergence and improving sample efficiency.
+\end{enumerate}
+
+\subsection{Why KGDRL, Not Vanilla PPO or Pure Rules?}
+
+The choice to develop KGDRL rather than deploying a pure heuristic or a standard PPO agent reflects a deliberate trade-off:
+
+\begin{itemize}
+    \item \textbf{Pure rules} (e.g., TZU) are interpretable but suboptimal. They cannot adapt to demand fluctuations or learn from historical performance.
+    \item \textbf{Vanilla PPO} achieves higher raw reward in small-sample experiments, but its decisions are opaque. In a GSP-regulated industry, warehouse operators need to explain why a particular batch contains refrigerated and ambient items---or why it does not.
+    \item \textbf{KGDRL} offers a middle path: the GAT structure makes dependencies explicit (which orders influenced which wave decision), and the KL constraint ensures the policy does not deviate far from known-safe heuristics\parencite{valtonen2024gat}.
+\end{itemize}
+
+\subsection{Technology Stack}
+
+\begin{table}[htbp]
+\centering
+\caption{Technology Stack for Maverick-SORT Essential}
+\label{tab:stack}
+\begin{tabular}{lll}
+\hline
+Layer & Technology & Rationale \\
+\hline
+Algorithm core & Python, PyTorch & Research-standard DRL framework \\
+Web frontend & Streamlit & Zero-deployment, single-file apps \\
+Visualization & Altair (Vega-Lite) & Declarative, reproducible charts \\
+Data simulation & NumPy, Pandas & Lightweight, no external DB needed \\
+LLM integration (optional) & Hugging Face & Three-tier fallback for explanations \\
+\hline
+\end{tabular}
+\end{table}
+
+The Streamlit choice is worth explaining. We needed a runnable prototype that Wang Li could access via a web browser without installation. Streamlit's ``rerun-on-change'' model is imperfect for real-time dashboards (see Section~\ref{sec:results}), but it reduces deployment friction to near zero---critical for a product whose first hurdle is simply getting the user to try it.

@@ -1,0 +1,144 @@
+% ============================================================
+% macros.tex
+% Digital Innovation — Hand-in Template
+% SDC / AAUBS / UCAS · 2026
+% Eskil Olav Andersen, Aalborg University Business School
+% ============================================================
+% A lean set of reusable commands. The principle: define only
+% what genuinely recurs. Add your own at the bottom following
+% the same pattern. Delete anything you do not use.
+% ============================================================
+
+\usepackage{xspace}
+
+% ── Institutional shorthands ─────────────────────────────────
+% Saves typing and keeps spelling consistent throughout.
+%
+%   \aaubs    →  Aalborg University Business School  (navy bold)
+%   \sdc      →  Sino-Danish Center                  (navy bold)
+%   \ucas     →  UCAS                                (navy bold)
+%   \ai       →  AI                                  (navy bold)
+%   \genai    →  GenAI                               (navy bold)
+
+\newcommand{\aaubs}{\textbf{\color{primarycolor}Aalborg University Business School}\xspace}
+\newcommand{\sdc}{\textbf{\color{primarycolor}Sino-Danish Center}\xspace}
+\newcommand{\ucas}{\textbf{\color{primarycolor}UCAS}\xspace}
+\newcommand{\ai}{\textbf{\color{primarycolor}AI}\xspace}
+\newcommand{\genai}{\textbf{\color{primarycolor}GenAI}\xspace}
+
+% ── Typography utilities ─────────────────────────────────────
+
+% \keyterm{text}
+% First introduction of a concept — navy bold.
+% Use once per term, not as general emphasis.
+% Example: \keyterm{Technology-Organization-Environment (TOE) framework}
+\newcommand{\keyterm}[1]{\textbf{\color{primarycolor}#1}}
+
+% \highlight{text}
+% Inline accent highlight — orange background, bold.
+% Use at most once or twice per page. Loses effect if overused.
+% Example: \highlight{binding constraint}
+\newcommand{\highlight}[1]{\colorbox{accentcolor!20}{\textbf{#1}}}
+
+% \source{attribution}
+% Unobtrusive source line — sits below a figure or table.
+% Example: \source{Tornatzky \& Fleischer, 1990}
+\newcommand{\source}[1]{%
+  \begin{flushright}
+    \footnotesize\textit{\color{aaugray}Source: #1}
+  \end{flushright}%
+}
+
+% \tocite
+% Placeholder for a citation you still need to fill in.
+% Shows [CITE] in orange so it is visible during drafting.
+% Replace every instance before submission.
+% Example: The model performed well in early tests \tocite.
+\newcommand{\tocite}{\textcolor{accentcolor}{\textbf{[CITE]}}\xspace}
+
+% ── Research question box ────────────────────────────────────
+%
+% \rqbox{Your research question here.}
+%
+% A prominent display box for your guiding research question.
+% Use once, in the introduction. The box signals to the reader
+% that everything that follows is organized around this question.
+%
+% Example:
+%   \rqbox{What stands between our replenishment tool and
+%   adoption by an independent pharmacy, and what did
+%   building it teach us about working with AI?}
+%
+% You can modify the colors by changing primarycolor and
+% accentcolor!40 below to any color defined in preamble.tex.
+
+\newcommand{\rqbox}[1]{%
+  \begin{tcolorbox}[
+    enhanced,
+    colback    = primarycolor!5,
+    colframe   = primarycolor,
+    leftrule   = 4pt,
+    rightrule  = 0.4pt,
+    toprule    = 0.4pt,
+    bottomrule = 0.4pt,
+    arc        = 2pt,
+    left       = 10pt,
+    right      = 10pt,
+    top        = 8pt,
+    bottom     = 8pt,
+    fonttitle  = \small\bfseries\color{primarycolor},
+    title      = {Guiding Research Question},
+  ]
+  \small\itshape #1
+  \end{tcolorbox}%
+}
+
+% ── General callout / insight box ────────────────────────────
+%
+% \insightbox[color]{Label}{Content}
+%
+% A flexible box for key findings, limitations, or takeaways.
+% The optional color argument defaults to primarycolor.
+% The label appears as a bold title inside the box.
+%
+% Examples:
+%   \insightbox{Key finding}{The binding constraint is not
+%   technical readiness but organizational capacity to
+%   interpret AI output without supplementary lookup.}
+%
+%   \insightbox[aaugreen]{Confirmed}{Output quality met the
+%   threshold for user trust within the first session.}
+%
+%   \insightbox[aaured]{Limitation}{The model has no access
+%   to live pricing data; all outputs reflect a static
+%   snapshot from the training period.}
+
+\newcommand{\insightbox}[3][primarycolor]{%
+  \begin{tcolorbox}[
+    enhanced,
+    colback    = #1!6,
+    colframe   = #1,
+    leftrule   = 4pt,
+    rightrule  = 0.4pt,
+    toprule    = 0.4pt,
+    bottomrule = 0.4pt,
+    arc        = 2pt,
+    left       = 10pt,
+    right      = 10pt,
+    top        = 7pt,
+    bottom     = 7pt,
+    fonttitle  = \small\bfseries\color{#1},
+    title      = {#2},
+    breakable,
+  ]
+  \small #3
+  \end{tcolorbox}%
+}
+
+% ── Add your own macros below ────────────────────────────────
+% Follow the same pattern: a short comment, the definition,
+% and at least one usage example in a comment.
+%
+% Example of a simple shorthand:
+%   \newcommand{\productname}{ReplenishAI\xspace}
+%   % Usage: \productname is a forecasting tool for ...

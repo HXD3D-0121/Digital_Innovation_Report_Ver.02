@@ -1,0 +1,121 @@
+% ============================================================
+% NOTE: Do not compile this file directly. Compile main.tex instead.
+% ============================================================
+% preamble.tex
+% Digital Innovation — Hand-in Template
+% SDC / AAUBS / UCAS · 2026
+% Eskil Olav Andersen, Aalborg University Business School
+% ============================================================
+% This preamble is intentionally readable. Change what you
+% need; leave comments so your group knows what each block does.
+% ============================================================
+
+\documentclass[12pt, a4paper]{article}
+
+% ── Encoding and language ────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}           % required by biblatex
+
+% ── Fonts ────────────────────────────────────────────────────
+% Lato is the AAU brand font. If it is unavailable in your
+% LaTeX distribution, remove these two lines — the document
+% will fall back to the default sans-serif font.
+\usepackage{lato}
+\renewcommand{\familydefault}{\sfdefault}
+
+% ── Page geometry ────────────────────────────────────────────
+% Standard margins for a 10-page report. Adjust if needed.
+\usepackage[
+  a4paper,
+  top=25mm,
+  bottom=25mm,
+  left=30mm,
+  right=25mm,
+  headheight=25pt
+]{geometry}
+
+% ── AAU color palette ────────────────────────────────────────
+% These match the slide deck exactly. Use them via the named
+% shortcuts defined in macros.tex rather than raw RGB values.
+\usepackage{xcolor}
+
+\definecolor{aaublue}{RGB}{31, 25, 82}           % AAU deep navy
+\definecolor{aaulightblue}{RGB}{64, 102, 178}    % AAU mid blue
+\definecolor{aaugray}{RGB}{67, 90, 105}          % AAU gray
+\definecolor{aaulightgray}{RGB}{166, 168, 171}   % AAU light gray
+\definecolor{aausilver}{RGB}{237, 237, 237}      % AAU silver background
+\definecolor{aauorange}{RGB}{187, 91, 24}        % AAU orange (accent)
+\definecolor{aaugreen}{RGB}{15, 134, 98}         % AAU green
+\definecolor{aaured}{RGB}{204, 68, 92}           % AAU red
+
+\colorlet{primarycolor}{aaublue}
+\colorlet{accentcolor}{aauorange}
+
+% ── Core packages ────────────────────────────────────────────
+\usepackage{graphicx}           % figures
+\usepackage{booktabs}           % professional tables
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{microtype}          % better text spacing
+\usepackage{parskip}            % paragraph spacing instead of indent
+\usepackage{setspace}
+\setstretch{1.15}
+
+% ── Mathematics ──────────────────────────────────────────────
+\usepackage{amsmath}            % equations, align, etc.
+\usepackage{amssymb}            % \mathbb, \mathcal, etc.
+
+% ── Callout boxes ────────────────────────────────────────────
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% ── Headers and footers ──────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{aaugray}{Digital Innovation · SDC / AAUBS / UCAS · 2026}}
+\fancyhead[R]{}
+\fancyfoot[C]{\small\textcolor{aaugray}{\thepage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primarycolor}\leaders\hrule height \headrulewidth\hfill}}
+
+% ── Section heading style ────────────────────────────────────
+% Clean, navy headings. Adjust font sizes to your preference.
+\usepackage{titlesec}
+\titleformat{\section}
+  {\large\bfseries\color{primarycolor}}
+  {\thesection.}{0.6em}{}
+  [\vspace{-0.3em}\textcolor{primarycolor!30}{\rule{\linewidth}{0.4pt}}]
+
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{primarycolor}}
+  {\thesubsection}{0.5em}{}
+
+% Unnumbered subsections inherit the subsection style above.
+
+% ── TikZ and diagrams ────────────────────────────────────────
+% Used in the appendix architecture diagram example.
+% Safe to remove if you are not drawing diagrams.
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, shapes.geometric, shapes,
+                positioning, calc, backgrounds, fit}
+
+% ── Hyperlinks ───────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks  = true,
+  linkcolor   = primarycolor,
+  urlcolor    = primarycolor,
+  citecolor   = primarycolor,
+  filecolor   = primarycolor,
+  pdftitle    = {Digital Innovation — Case Solution},
+  pdfauthor   = {Student Team},
+}
+
+% ── Bibliography ─────────────────────────────────────────────
+% APA style as required. Biber is the recommended backend.
+% Compile order: pdflatex → biber → pdflatex → pdflatex
+\usepackage[style=apa, backend=biber]{biblatex}
+\addbibresource{bib/references.bib}

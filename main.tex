@@ -1,0 +1,163 @@
+% ============================================================
+% main.tex
+% Digital Innovation — Written Case Solution
+% SDC / AAUBS / UCAS · 2026
+% ============================================================
+% This is the master file. It pulls in the preamble, macros,
+% and one file per section. Compile with:
+%
+%   pdflatex main.tex
+%   biber main
+%   pdflatex main.tex
+%   pdflatex main.tex
+%
+% In Overleaf this happens automatically when you click
+% Recompile. If you see missing references or bibliography
+% errors, click the dropdown next to Recompile and choose
+% "Recompile from scratch."
+% ============================================================
+
+\input{setup/preamble.tex}
+\input{setup/macros.tex}
+
+% ============================================================
+% Document metadata
+% Fill in your group's details here.
+% ============================================================
+
+\newcommand{\ProductName}{Maverick-SORT}
+\newcommand{\CaseName}{Pharmaceutical Distribution Warehouse Wave Allocation}
+\newcommand{\GroupMembers}{Junyuan Luo}
+\newcommand{\SubmissionDate}{12 June 2026}
+
+% ============================================================
+\begin{document}
+% ============================================================
+
+% ── Title page ───────────────────────────────────────────────
+% The title page uses TikZ for the header and footer bars
+% (matching the visual identity of the slide deck) and
+% \includegraphics for the institution logos.
+%
+% To restyle: change the fill colors, adjust logo heights,
+% or replace the bar-based design entirely. The page uses
+% \thispagestyle{empty} so the header/footer from fancyhdr
+% does not appear on top of the custom design.
+
+\begin{titlepage}
+\thispagestyle{empty}
+
+\begin{tikzpicture}[remember picture, overlay]
+  % Top bar — primary navy
+  \fill[primarycolor]
+    (current page.north west) rectangle
+    ([yshift=-1.2cm] current page.north east);
+
+  % Bottom bar — accent orange
+  \fill[accentcolor]
+    ([yshift=1.0cm] current page.south west) rectangle
+    (current page.south east);
+
+  % AAUBS2 wordmark — top right inside bar
+  % Placed on a small white pill so it is legible on the navy bar.
+  \node[anchor=east] at
+  ([xshift=-1.2cm, yshift=-0.6cm] current page.north east) {
+    \colorbox{primarycolor}{%
+      \color{white}%
+      \includegraphics[height=0.6cm]{media/images/AAUBS2white.png}%
+    }
+  };
+\end{tikzpicture}
+
+% ── Title block ──────────────────────────────────────────────
+\vfill
+
+\begin{center}
+
+  {\footnotesize\textcolor{aaugray}{\MakeUppercase{Digital Innovation · Module 2.4}}}\\[0.4em]
+  {\footnotesize\textcolor{aaugray}{SDC / AAUBS / UCAS · 2026}}
+
+  \vspace{1.6cm}
+
+  {\LARGE\bfseries\color{primarycolor} \ProductName}
+
+  \vspace{0.6em}
+
+  {\large\textcolor{aaugray}{\CaseName}}
+
+  \vspace{0.5em}
+  \textcolor{primarycolor!30}{\rule{0.4\linewidth}{0.8pt}}
+
+  \vspace{1.6cm}
+
+  {\normalsize\textcolor{aaugray}{\GroupMembers}}
+
+  \vspace{0.8cm}
+
+  {\small\textcolor{aaugray}{\SubmissionDate}}
+
+\end{center}
+
+% ── Logo row ─────────────────────────────────────────────────
+\vfill
+\begin{center}
+  \includegraphics[height=1.1cm]{media/images/AAUBS.png}%
+  \hspace{2.0em}%
+  \textcolor{aaugray!40}{\rule{0.4pt}{1.0cm}}%
+  \hspace{2.0em}%
+  \includegraphics[height=1.1cm]{media/images/SDC.png}%
+  \hspace{2.0em}%
+  \textcolor{aaugray!40}{\rule{0.4pt}{1.0cm}}%
+  \hspace{2.0em}%
+  \includegraphics[height=1.1cm]{media/images/UCAS.png}%
+\end{center}
+\vfill
+
+\end{titlepage}
+
+% ── Table of contents ────────────────────────────────────────
+% Remove or comment out if you prefer to start directly
+% with Section 1. On a 10-page document a ToC is optional.
+\tableofcontents
+\newpage
+
+% ============================================================
+% Main sections
+% Each \input pulls in one section file from sections/.
+% To reorder sections: rearrange the \input lines below.
+% To combine sections: merge two files or add content here.
+% ============================================================
+
+\input{sections/01_problem}
+
+\input{sections/02_architecture}
+
+\input{sections/03_AI-reflection}
+
+\input{sections/04_theory}
+
+\input{sections/05_results}
+
+% ── References ───────────────────────────────────────────────
+% Printed here. Does not count toward the 10-page limit.
+\newpage
+\printbibliography[heading=bibintoc, title={References}]
+
+% ── AI-use declaration ───────────────────────────────────────
+% Required. Does not count toward the 10-page limit.
+\newpage
+\input{sections/06_aideclaration}
+
+% ── Appendices ───────────────────────────────────────────────
+% Architecture diagram and screenshots.
+% Does not count toward the 10-page limit.
+\newpage
+\input{sections/appendix}
+
+% ============================================================
+\end{document}
+% ============================================================
+
+% ── Template credit ──────────────────────────────────────────
+% Digital Innovation · SDC / AAUBS / UCAS · 2026
+% Template: Eskil Olav Andersen, Aalborg University Business School

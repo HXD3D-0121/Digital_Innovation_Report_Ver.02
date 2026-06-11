@@ -1,0 +1,38 @@
+% ============================================================
+% 05_results.tex
+% Section 5: Results, Limitations, and Further Opportunities
+% ============================================================
+
+\section{Results, Limitations, and Further Opportunities}\label{sec:results}
+
+\subsection{What Works}
+
+\begin{enumerate}
+    \item \textbf{KGDRL outperforms baselines on distance}. In 20 simulated episodes, KGDRL achieves average picking distance of 665.7 meters vs. 666.7 for TZU and 690.9 for FCFS. The GAT encoder's ability to learn zone-proximity relationships is validated.
+    \item \textbf{The What-If simulator reduces perceived risk}. In informal testing with supply-chain classmates, users who interacted with the scenario simulator reported higher willingness-to-try than those who only saw static benchmark tables.
+    \item \textbf{The Essential/Pro tiering clarifies value}. Separating ``try before you buy'' (Essential) from ``enterprise resilience'' (Pro) prevents feature bloat from confusing the core message.
+\end{enumerate}
+
+\subsection{What Are Still Not Good Enough}
+
+\begin{enumerate}
+    \item \textbf{Streamlit's real-time refresh is unreliable}. The \texttt{st.rerun()} mechanism causes page flicker and occasionally drops session state. For a true ``command center'' experience, a React or Vue frontend with WebSocket data push would be necessary---but that would sacrifice the zero-deployment advantage.
+    \item \textbf{The reward function is over-simplified}. Real warehouse costs include picker fatigue curves, conveyor belt saturation, and dynamic slotting---none of which are modeled. The simulation optimizes a proxy, not the ground truth. Moreover, the ultimate objective of operation management is not just simply reducing costs, but improving the comprehensive performance of the whole enterprise. Although I set up a multiple-objective Pareto optimizer in the Essential edition, trying to make a collective reward calculation in a single terminal, the parameters of the simulations are still not enough to capture the full complexity.
+    \item \textbf{Elements of the project are still not interactive enough}. One of the most essential performance measures of the project is the accessibility and interactability of different elements, which is inadequate in the current version.
+\end{enumerate}
+
+\subsection{Risk: Dependency on Models and Tools We Do Not Control}
+
+Maverick-SORT depends on:
+\begin{itemize}
+    \item PyTorch (model training and inference)
+    \item Streamlit (UI framework)
+    \item Hugging Face Transformers (optional LLM explanations)
+    \item The GSP regulatory framework (business logic validity)
+\end{itemize}
+
+If PyTorch 3.0 deprecates \texttt{nn.Module} patterns we rely on, or if Streamlit changes its theming API, the 4,000+ lines of AI-generated UI code would need human revision. \textit{Who would notice?} Currently, no one on the team has read every line of generated CSS. This is the orphaned codification risk identified by Jurowetzki\parencite{Jurowetzki2026}: the code works until it does not, and the expertise to fix it may not reside with the people who deploy it.
+
+\subsection{One Realistic Next Step}
+
+Rather than a list of ambitions, we propose a single next step: \textbf{a four-week paid pilot with one real warehouse}, collecting actual order data and picker feedback. The pilot would test not algorithmic performance (we can simulate that) but adoption dynamics: Does Wang Li return to the dashboard daily? Does she override recommendations, and when? Does she ask her manager for a budget? The answers would tell us whether the limiting condition is indeed champion bandwidth, or something we have not yet identified.

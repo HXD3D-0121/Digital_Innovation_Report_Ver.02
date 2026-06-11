@@ -1,0 +1,54 @@
+% ============================================================
+% 03_AI-reflection.tex
+% Section 3: Building with AI
+% ============================================================
+
+\section{Building with AI}\label{sec:building}
+
+\subsection{Where the Agent Worked, Where Humans Judged}
+
+We used Claude Code (Anthropic CLI) as the primary AI programming assistant throughout the project. The division of labor evolved as follows:
+
+\begin{table}[htbp]
+\centering
+\caption{Human-AI Division of Labor}
+\label{tab:labor}
+\begin{tabular}{lll}
+\hline
+Task & AI Contribution & Human Contribution \\
+\hline
+MDP formalization & Generated LaTeX equations, notation tables & Defined state/action scope, validated constraints \\
+PPO implementation & $\sim$1,100 lines of Python (env, agent, baselines) & Tuned $\alpha_{\text{setup}}$ from 5.0 to 15.0 after observing behavior \\
+GAT layer & Self-attention mechanism, message passing & Decided single-head vs. multi-head; fixed scatter-add bug \\
+Dashboard UI & $\sim$1,600 lines HTML/CSS/JS + Streamlit pages & Chose color palette, interaction flow, responsive breakpoints \\
+Bug fixes & Generated patches for KeyError, ImportError & Identified root causes from Cloud logs, validated fixes \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{A Concrete Example: The Agent Getting It Wrong}
+
+One instructive failure occurred during the Streamlit Cloud deployment. The AI had generated \texttt{hf\_integration/config.py} with a straightforward \texttt{import transformers} at module load time. Locally, this worked fine. On Streamlit Cloud, it triggered a cascade:
+
+\begin{enumerate}
+    \item \texttt{transformers} scans all internal model registries on import.
+    \item Image models (mobilenet\_v2, mobilevit, etc.) attempt \texttt{from torchvision.transforms.v2 import ...}.
+    \item \texttt{torchvision} is absent on Cloud $\rightarrow$ \texttt{ModuleNotFoundError} floods logs.
+    \item Streamlit's file watcher detects module changes and restarts the app.
+    \item Restart repeats the import $\rightarrow$ infinite error loop.
+\end{enumerate}
+
+The AI's initial fix was to add \texttt{torchvision} to \texttt{requirements.txt}. But \texttt{torchvision==0.22.0} requires \texttt{torch==2.7.0}, conflicting with our pinned \texttt{torch==2.12.0}. The AI then proposed bumping \texttt{torch}, which risked breaking CUDA compatibility.
+
+\textbf{Human judgment}: We recognized that the root cause was not a missing dependency but an \textit{over-eager import side effect}. The correct fix was three-layered: (1) set \texttt{TRANSFORMERS\_NO\_ADVISORY\_WARNINGS=1} before import; (2) move the \texttt{transformers} import inside a lazy-loading function; (3) disable Streamlit's file watcher entirely via \texttt{.streamlit/config.toml}\parencite{Jurowetzki2026}. This pattern---suppressing rather than satisfying a bad dependency---is not something the AI proposed autonomously. It required understanding that \texttt{transformers}' internal model registry scan is an \textit{implementation detail} we should not be exposed to.
+
+\subsection{Knowing When Output Is Good Enough}
+
+Our criterion for keeping AI-generated code was twofold:
+
+\begin{enumerate}
+    \item \textbf{Functional correctness}: Does it run without errors on representative inputs?
+    \item \textbf{Structural soundness}: Can a human explain what every major block does in one sentence?
+\end{enumerate}
+
+The second criterion proved more important than the first. The AI generated a \texttt{What-If Scenario Simulator} with impressive statistical machinery---sensitivity analysis, multi-scenario comparison, JSON export. But when we asked ``What does a warehouse manager learn from this in 30 seconds?'' the answer was unclear. We stripped the output to four built-in scenario templates (wave capacity sweep, setup cost sweep, peak demand, policy comparison) with pre-computed visual summaries. \textit{Less code, more clarity}.
