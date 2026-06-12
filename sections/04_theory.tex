@@ -1,11 +1,6 @@
-% ============================================================
-% 04_theory.tex
-% Section 4: Theoretical Reflection
-% ============================================================
-
 \section{Theoretical Reflection}\label{sec:theory}
 
-Taken together, the theories discussed in this section explain the same challenge from different levels of analysis. The jagged frontier highlights the uneven capabilities of AI systems, knowledge codification explains how expertise is embedded into digital artifacts, and augmentation theory clarifies the continuing role of human judgment. Building on these foundations, the TOE framework helps explain why technically feasible systems still struggle to achieve organizational adoption. Together, they suggest that successful digital innovation depends not only on technical capability, but also on the organizational conditions required for adoption.
+Taken together, the theories discussed in this section explain the same challenge from different levels of analysis. The jagged frontier highlights the uneven capabilities of AI systems, knowledge codification explains how expertise is embedded into digital artifacts, and augmentation theory clarifies the continuing role of human judgment. Building on these foundations, the TOE framework helps explain why technically feasible systems still struggle to achieve organizational adoption. Together, they suggest that successful digital innovation depends not only on technical capability, but also on how human expertise is codified, augmented, and ultimately adopted within organizations.
 
 \subsection{AI and Work: Augmentation, Automation, and the Jagged Frontier}
 
@@ -24,7 +19,7 @@ Dell'Acqua et al.\parencite{DellAcqua2026} introduce the ``jagged technological 
 \textbf{Outside the frontier} (AI harmed or misled):
 \begin{itemize}
 \item Dependency management for Cloud deployment: the AI added \texttt{torchvision} to solve a symptom rather than the root cause.
-\item Reward-function tuning: an initial $\alpha_{\text{setup}} = 5.0$ generated excessive small waves, a behavioral issue the AI failed to recognize.
+\item Reward-function tuning: an initial parameter generated excessive small waves, a behavioral issue the AI failed to recognize.
 \item Product positioning: the AI consistently expanded feature scope (NSGA-II, federated learning, 3D visualization) without evaluating whether users actually needed these additions.
 \end{itemize}
 
@@ -38,11 +33,22 @@ Consider our \texttt{requirements.txt}. The AI encoded dependencies quickly. How
 
 This generates what Jurowetzki calls \textbf{orphaned codification}: artifacts whose assumptions are difficult to trace or challenge. Our project contains thousands of lines of AI-generated code whose underlying logic may become increasingly difficult to maintain as platforms evolve.
 
+% \subsubsection{Augmentation vs. Automation}
+
+% Raisch and Krakowski\parencite{raisch2021automation} describe the ``automation--augmentation paradox'': AI systems that automate routine tasks often increase demand for higher-level human judgment. Maverick-SORT was deliberately designed as an augmentation tool rather than an automation replacement.
+
+% Warehouse managers remain the decision-makers; the system recommends but does not execute. Even the What-If simulator is framed as a decision-support tool rather than an autonomous optimizer. This design limits immediate efficiency gains compared with full automation, but it substantially lowers adoption risk because users retain control and can override recommendations.
+
+% Importantly, this augmentation logic is enabled by knowledge codification. Warehouse scheduling expertise that would traditionally remain tacit---such as balancing setup costs, temperature constraints, and workload allocation---is partially embedded into the KGDRL framework through heuristic guidance and operational rules. Rather than replacing managerial judgment, the system externalizes and scales it. In this sense, Maverick-SORT functions less as an autonomous decision-maker and more as a cognitive exoskeleton that allows managers to evaluate alternatives more effectively while remaining accountable for final decisions.
+
 \subsubsection{Augmentation vs. Automation}
 
 Raisch and Krakowski\parencite{raisch2021automation} describe the ``automation--augmentation paradox'': AI systems that automate routine tasks often increase demand for higher-level human judgment. Maverick-SORT was deliberately designed as an augmentation tool rather than an automation replacement.
 
-Warehouse managers remain the decision-makers; the system recommends but does not execute. Even the What-If simulator is framed as a decision-support tool rather than an autonomous optimizer. This design limits immediate efficiency gains compared with full automation, but it substantially lowers adoption risk because users retain control and can override recommendations.
+Warehouse managers remain the decision-makers; the system recommends but does not execute. The What-If simulator is therefore positioned as a decision-support tool rather than an autonomous optimizer. Although this limits potential efficiency gains from full automation, it lowers adoption risk by allowing users to retain control and override recommendations.
+
+This augmentation logic is enabled by knowledge codification. Scheduling expertise that would otherwise remain tacit is embedded into the KGDRL framework through heuristic guidance and operational rules. Rather than replacing managerial judgment, the system externalizes and scales it. In this sense, Maverick-SORT functions less as an autonomous decision-maker and more as a cognitive exoskeleton that helps managers evaluate alternatives while remaining accountable for final decisions.
+
 
 \subsection{Adoption and Diffusion: A TOE Framework Perspective}
 
@@ -65,14 +71,13 @@ Among all TOE factors, the greatest constraint is organizational champion bandwi
 The class Demo Day provided a useful reality check regarding how the system was perceived compared with how it was built.
 
 \begin{itemize}
+
 \item \textbf{What resonated most (System Logic).} Reviewers were most engaged by the relationships between components---particularly how KGDRL recommendations connected to the Algorithm Arena and AI Copilot explanations.
 
-```
 \item \textbf{What was largely ignored (Visual Complexity).} Detailed dashboard visualizations attracted relatively little attention. Without sufficient operational context, many charts appeared as generic analytics rather than sources of business value.
 
 \item \textbf{The core skepticism (Product Identity).} The strongest critiques questioned the product's fundamental value proposition: \textit{What is the core benefit? Why would someone adopt this system?}
-```
 
 \end{itemize}
 
-\textbf{The Key Lesson.} This feedback revealed that my immediate challenge was not technical performance but narrative clarity. As a result, we shifted the project's positioning away from a feature-oriented demonstration and toward the concept of a ``Risk Reversal Engine'' designed to reduce adoption friction. The experience reinforced the broader conclusion of this report: organizational attention, rather than algorithm quality, is often the primary constraint on digital innovation adoption.
+\textbf{The Key Lesson.} This feedback revealed that the immediate challenge was not technical performance but narrative clarity. As a result, the project's positioning shifted away from a feature-oriented demonstration and toward the concept of a ``Risk Reversal Engine'' designed to reduce adoption friction. The experience reinforced the broader conclusion of this report: organizational attention, rather than algorithm quality, is often the primary constraint on digital innovation adoption.

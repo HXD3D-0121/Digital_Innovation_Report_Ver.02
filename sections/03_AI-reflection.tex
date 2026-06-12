@@ -5,51 +5,22 @@
 
 \section{Building with AI}\label{sec:building}
 
-\subsection{Human Agency as the Driving Force of Creation}
+\subsection{Human Judgment in Managing AI Output}
 
-Throughout the development of Maverick-SORT, we adhered to a core principle of historical materialism: \textbf{human intellect and agency remain the fundamental driving forces of creation}. AI is a revolutionary means of production, but it is not the architect. 
+The primary challenge in developing Maverick-SORT was not generating code, but verifying its accuracy, feasibility, and relevance at the sheer speed of AI output. While the agent (Claude Code) translated our mathematical KGDRL models into PyTorch boilerplate efficiently, it suffered from severe context degradation: it frequently forgot macro-project flows, struggled with cross-branch GitHub push logistics, and failed to retrieve previously working commands. 
 
-The core mathematical foundation of the system---the dynamic scheduling model, the Markov Decision Process (MDP) formulation, and the Knowledge-Guided Deep Reinforcement Learning (KGDRL) architecture---was conceived, constructed, and validated entirely by the human author based on real-world pharmaceutical logistics pain points. The AI (Claude Code) did not invent the algorithm; its role was strictly confined to execution, translating human-defined theoretical models into PyTorch boilerplate, and generating the Streamlit UI scaffolding. 
+To counter this, the human role shifted to strict \textbf{project management and traceability}. AI-generated outputs were only accepted when they satisfied three criteria: technical correctness, consistency with the KGDRL design, and practical relevance to the warehouse use case. I forced the agent to maintain continuous markdown logs---such as \texttt{ai\_usage\_review.md}, \texttt{research\_note.md}, and \texttt{DATA\_UPLOAD\_FEASIBILITY\_REPORT.md}---recording every dependency change, architectural pivot, and run result. When the AI inevitably hallucinated or drifted off-course, these logs allowed me to rapidly audit its steps and explicitly guide it back to the established R\&D baseline. AI is a revolutionary means of production, but human agency and project orchestration remain the absolute driving forces of creation. The resulting division of labor was simple: the AI accelerated execution, while I remained responsible for direction, validation, and integration.
 
-The division of labor evolved into a strict ``Human-Led Direction, AI-Led Implementation'' paradigm, as detailed below:
+\subsection{A Concrete Error: Systems Thinking vs. Local Patching}
 
-\begin{table}[htbp]
-\centering
-\caption{Human-AI Division of Labor}
-\label{tab:labor}
-\begin{tabular}{p{3.5cm} p{5.5cm} p{6cm}}
-\hline
-Task & AI Contribution & Human Contribution \\
-\hline
-Algorithm Architecture & \textit{None (beyond LaTeX formatting)} & Designed the KGDRL theoretical model, defined state/action space, and established reward logic. \\
-PPO Implementation & Generated $\sim$1,100 lines of PyTorch tensor operations and environment scaffolding. & Dictated network topology (Actor-Critic) and tuned critical parameters (e.g., $\alpha_{\text{setup}}$) to match business reality. \\
-System Debugging & Proposed local, symptom-based patches. & Conducted systems-level root-cause analysis via Cloud logs; defined robust fallback mechanisms. \\
-Dashboard UI & Wrote $\sim$1,600 lines of Streamlit components, HTML/CSS, and reactive callbacks. & Designed user flow, determined operational priorities, and enforced defensive data processing. \\
-\hline
-\end{tabular}
-\end{table}
+One instructive failure during the Streamlit Cloud deployment perfectly illustrates the limitation of the AI's local reasoning compared to human systems-level thinking. 
 
-\subsection{A Concrete Example: Systems Thinking vs. Local Patching}
+The AI had generated a config file with a standard \texttt{import transformers}. On the cloud, this triggered a catastrophic cascade: the import scanned for image models, sought \texttt{torchvision} (which was absent), threw a \texttt{ModuleNotFoundError}, and inadvertently triggered Streamlit's background file-watcher to infinitely restart the app.
 
-One instructive failure occurred during the Streamlit Cloud deployment, perfectly illustrating the limitation of the AI's local reasoning compared to human systems-level thinking. 
+When asked to fix this, the AI proposed adding \texttt{torchvision==0.22.0} to the requirements. However, this conflicted with our pinned \texttt{torch==2.12.0}. The AI then blindly suggested bumping \texttt{torch}, which would have destroyed our CUDA compatibility. 
 
-The AI had generated \texttt{hf\_integration/config.py} with a straightforward \texttt{import transformers} at module load time. On Streamlit Cloud, it triggered a catastrophic cascade:
-\begin{enumerate}
-    \item \texttt{transformers} scans all internal model registries on import.
-    \item Image models attempt to import \texttt{torchvision}.
-    \item \texttt{torchvision} is absent on the Cloud environment $\rightarrow$ \texttt{ModuleNotFoundError} floods the logs.
-    \item Streamlit's background file watcher detects perceived module changes and restarts the app.
-    \item The restart repeats the import $\rightarrow$ resulting in an infinite crash loop.
-\end{enumerate}
+\textbf{Human judgment}: The AI was treating the symptom, not the disease. Recognizing the root cause, I implemented a systems-level defense: (1) suppressing the scan via environment variables, (2) lazy-loading the import, and crucially, (3) disabling Streamlit's file watcher entirely\parencite{Jurowetzki2026}. The AI lacks the environmental awareness to understand cloud background-watcher dynamics; that operational wisdom must come from the human.
 
-When asked to fix this, the AI proposed adding \texttt{torchvision==0.22.0} to the requirements. However, this required \texttt{torch==2.7.0}, creating an unresolvable conflict with our pinned \texttt{torch==2.12.0}. The AI then blindly proposed bumping the \texttt{torch} version, which would have destroyed our CUDA compatibility. 
+\subsection{Defensive Engineering and the ``Happy Path'' Fallacy}
 
-\textbf{Human judgment}: The AI was trying to satisfy a bad dependency, treating the symptom rather than the disease. As recorded in my development logs, I recognized the root cause and implemented a three-layered architectural defense: (1) injecting \texttt{TRANSFORMERS\_NO\_ADVISORY\_WARNINGS=1} to suppress the scan; (2) moving the import into a lazy-loading function; and crucially, (3) disabling Streamlit's file watcher entirely via \texttt{.streamlit/config.toml}\parencite{Jurowetzki2026}. The AI lacks the environmental awareness to understand that background watchers do more harm than good in complex cloud dependency scenarios; that operational wisdom must come from the human.
-
-\subsection{Defensive Programming: Knowing When AI Output is Naive}
-
-Our criterion for keeping AI-generated code went beyond mere functional correctness. We evaluated its structural soundness against the chaos of real-world operations. 
-
-A primary takeaway from our development review was that \textbf{AI intrinsically assumes a "happy path."} When generating the data-upload module for the warehouse dashboard, the AI wrote code assuming the user's uploaded CSV would perfectly match our expected schema. 
-
-The human operator, understanding the unpredictable nature of actual warehouse data, had to force a paradigm shift: from \textit{``assume the schema is correct''} to \textit{``assume the schema is wrong.''} We manually intervened to rewrite the data ingestion layer using defensive programming patterns (e.g., \texttt{df.columns.intersection(expected)}), ensuring that Maverick-SORT would gracefully handle missing columns or malformed pharmaceutical datasets without crashing. The AI can write the code to process the data, but only the human understands the hostility of the operational environment it will be deployed in.
+Similarly, we found that \textbf{AI intrinsically assumes a ``happy path.''} For the CSV upload module, the AI wrote ingestion code expecting the user's data to perfectly match our schema. Knowing the hostility and unpredictability of actual warehouse data, I manually intervened to enforce defensive programming (e.g., \texttt{df.columns.intersection(expected)}). The AI can generate the processing logic, but only the human understands the chaos of the operational environment it will be deployed in, shifting the paradigm from \textit{``assume the data is right''} to \textit{``assume the data is broken.''}
