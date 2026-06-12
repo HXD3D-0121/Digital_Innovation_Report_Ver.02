@@ -5,67 +5,74 @@
 
 \section{Theoretical Reflection}\label{sec:theory}
 
+Taken together, the theories discussed in this section explain the same challenge from different levels of analysis. The jagged frontier highlights the uneven capabilities of AI systems, knowledge codification explains how expertise is embedded into digital artifacts, and augmentation theory clarifies the continuing role of human judgment. Building on these foundations, the TOE framework helps explain why technically feasible systems still struggle to achieve organizational adoption. Together, they suggest that successful digital innovation depends not only on technical capability, but also on the organizational conditions required for adoption.
+
 \subsection{AI and Work: Augmentation, Automation, and the Jagged Frontier}
 
 \subsubsection{The Jagged Frontier in Practice}
 
-Dell'Acqua et al.\parencite{DellAcqua2026} introduce the ``jagged technological frontier'' to describe how AI assistance improves performance on some tasks while degrading it on others, even within the same knowledge workflow and at similar perceived difficulty. Our build process is a case study in navigating this frontier.
+Dell'Acqua et al.\parencite{DellAcqua2026} introduce the ``jagged technological frontier'' to describe how AI assistance improves performance on some tasks while degrading it on others, even within the same knowledge workflow and at similar perceived difficulty. Our build process provides a practical example of navigating this frontier.
 
 \textbf{Inside the frontier} (AI helped):
 \begin{itemize}
-    \item Boilerplate Python class definitions, docstrings, and type hints.
-    \item LaTeX equation formatting and notation tables.
-    \item Multi-language UI translation (200+ terms from Chinese to pharmaceutical-logistics English).
-    \item CSS animation and responsive layout code.
+\item Boilerplate Python class definitions, docstrings, and type hints.
+\item LaTeX equation formatting and notation tables.
+\item Multi-language UI translation (200+ terms from Chinese to pharmaceutical-logistics English).
+\item CSS animation and responsive layout code.
 \end{itemize}
 
 \textbf{Outside the frontier} (AI harmed or misled):
 \begin{itemize}
-    \item Dependency management for Cloud deployment: the AI added \texttt{torchvision} to solve a symptom, not the cause.
-    \item Reward function tuning: initial $\alpha_{\text{setup}} = 5.0$ produced too many small waves; the AI did not recognize the behavioral pattern without human specification.
-    \item Product positioning: the AI's natural tendency was to add features (Pro edition with NSGA-II, federated learning, 3D visualizations). Left unchecked, this would have produced a bloated product with no clear entry point.
+\item Dependency management for Cloud deployment: the AI added \texttt{torchvision} to solve a symptom rather than the root cause.
+\item Reward-function tuning: an initial $\alpha_{\text{setup}} = 5.0$ generated excessive small waves, a behavioral issue the AI failed to recognize.
+\item Product positioning: the AI consistently expanded feature scope (NSGA-II, federated learning, 3D visualization) without evaluating whether users actually needed these additions.
 \end{itemize}
 
-The last point connects directly to Shipper's argument in ``After Automation''\parencite{shipper2026after}. Shipper observes that AI commoditizes the ``residue of human expertise---whatever can be made explicit enough to train on.'' This collapses the value of default model output and creates demand for what is different. In our case, the AI could generate feature after feature, but it could not determine which features Wang Li would actually pay for. That judgment---\textit{what is scarce when execution is cheap}\parencite{shipper2026after}---remained human.
+The last point echoes Shipper's argument in ``After Automation''\parencite{shipper2026after}: as AI commoditizes codified expertise, the value of human judgment increases. While the AI could generate features rapidly, deciding which features created meaningful user value remained a fundamentally human task.
 
 \subsubsection{Knowledge Codification and Its Risks}
 
-Jurowetzki\parencite{Jurowetzki2026}, building on Cowan et al.\parencite{cowan2000codification}, decomposes codification into four capacities: encoding, evaluation, maintenance, and revision. AI dramatically lowers encoding costs (writing code, generating documentation), but it raises maintenance and revision costs in subtle ways.
+Jurowetzki\parencite{Jurowetzki2026}, building on Cowan et al.\parencite{cowan2000codification}, decomposes codification into four capacities: encoding, evaluation, maintenance, and revision. AI dramatically lowers encoding costs by generating code and documentation, but it often increases maintenance and revision challenges.
 
-Consider our \texttt{requirements.txt}. The AI encoded dependencies quickly. But when the Cloud environment changed underneath us---when \texttt{transformers} introduced a new internal scan behavior, when \texttt{torchvision}'s version pinning shifted---\textit{who evaluated and revised the encoded knowledge}? The answer was: the human, because the AI had no model of Streamlit Cloud's container behavior.
+Consider our \texttt{requirements.txt}. The AI encoded dependencies quickly. However, when the deployment environment changed---through updates to \texttt{transformers}, dependency conflicts, or Streamlit Cloud behavior---the responsibility for evaluating and revising the encoded knowledge fell entirely to the human developer.
 
-This generates what Jurowetzki calls \textbf{orphaned codification}: artifacts whose premises no one can contest. Our codebase contains 4,000+ lines of AI-generated Streamlit dashboard code. If Streamlit 2.0 deprecates \texttt{st.dataframe} or changes its theming API, who on our team would notice? The person who originally specified the UI layout---but that person is not necessarily the one who can trace through 1,700 lines of generated CSS.
+This generates what Jurowetzki calls \textbf{orphaned codification}: artifacts whose assumptions are difficult to trace or challenge. Our project contains thousands of lines of AI-generated code whose underlying logic may become increasingly difficult to maintain as platforms evolve.
 
 \subsubsection{Augmentation vs. Automation}
 
-Raisch and Krakowski\parencite{raisch2021automation} frame the ``automation-augmentation paradox'': AI systems that automate routine tasks may simultaneously create demand for higher-level human judgment. Maverick-SORT is designed as an augmentation tool, not an automation replacement. Wang Li remains the decision-maker; the system recommends but does not execute. The What-If simulator is deliberately named a ``simulator,'' not an ``optimizer,'' to signal that the human must still choose.
+Raisch and Krakowski\parencite{raisch2021automation} describe the ``automation--augmentation paradox'': AI systems that automate routine tasks often increase demand for higher-level human judgment. Maverick-SORT was deliberately designed as an augmentation tool rather than an automation replacement.
 
-This design choice has a cost: it limits the system's immediate efficiency gains. A full automation integration could push wave decisions directly to pickers' handheld devices. But it also limits adoption risk: operation managers do not need to trust a black box; they need to trust a transparent recommendation they can override.
+Warehouse managers remain the decision-makers; the system recommends but does not execute. Even the What-If simulator is framed as a decision-support tool rather than an autonomous optimizer. This design limits immediate efficiency gains compared with full automation, but it substantially lowers adoption risk because users retain control and can override recommendations.
 
 \subsection{Adoption and Diffusion: A TOE Framework Perspective}
 
-The Technology--Organization--Environment (TOE) framework provides a useful lens for understanding whether Maverick-SORT can move beyond a prototype and reach real operational use.
+The Technology--Organization--Environment (TOE) framework provides a useful lens for understanding whether Maverick-SORT can move beyond a prototype and achieve real operational adoption.
 
 \paragraph{Technology.}
 Maverick-SORT is designed as a decision-support layer rather than a replacement for existing WMS platforms. While WMS systems excel at transaction processing and execution, they provide limited support for simulation, optimization, and scenario analysis. By remaining standalone and browser-based, the system delivers predictive intelligence without requiring costly modifications to legacy infrastructure.
 
 \paragraph{Organization.}
-The key adopter is not the IT department but the Operations Director. Unlike IT managers, whose priority is system stability and risk avoidance, operations managers are directly responsible for warehouse efficiency and service performance. The Essential Edition lowers adoption barriers by allowing them to test potential value independently through a zero-deployment ``What-If'' environment.
+The key adopter is not the IT department but the Operations Director. Unlike IT managers, whose priority is stability and risk avoidance, operations managers are directly responsible for warehouse performance. The Essential Edition lowers adoption barriers by allowing them to evaluate potential value independently through a zero-deployment What-If environment.
 
 \paragraph{Environment.}
 Pharmaceutical logistics operates under strict GSP compliance requirements. Rather than treating regulation as an obstacle, Maverick-SORT uses explainable, knowledge-guided recommendations to align optimization with existing operational rules. Regulatory pressure therefore becomes a driver of adoption rather than a barrier.
 
 \paragraph{The Most Limiting Condition.}
-Among all TOE factors, the greatest constraint is organizational champion bandwidth. Operations managers often lack the time, attention, and political capital required to evaluate new technologies. As a result, adoption depends less on algorithmic performance than on reducing the effort required to explore the solution. The Essential Edition, free trial, and five-minute simulation workflow are all designed to minimize this activation cost.
+Among all TOE factors, the greatest constraint is organizational champion bandwidth. Operations managers often lack the time, attention, and political capital required to evaluate new technologies. Consequently, adoption depends less on algorithmic performance than on reducing the effort required to explore the solution. The Essential Edition, free trial, and five-minute simulation workflow are all designed to minimize this activation cost.
 
-\subsection{What We Learned from Demo Day}
+\subsection{Demo Day as an Adoption Test}
 
-The recent class Demo Day provided a harsh but necessary reality check regarding how the system is perceived versus how it was built. The live feedback highlighted several critical insights that directly reshaped our product positioning:
+The class Demo Day provided a useful reality check regarding how the system was perceived compared with how it was built.
 
 \begin{itemize}
-    \item \textbf{What resonated most (The Architecture)}: The audience was highly engaged by the systemic relationships between different features---specifically how the underlying KGDRL algorithm directly fed into the user-facing ``Algorithm Arena'' and the AI Copilot explanations.
-    \item \textbf{What was ignored (The Visual Clutter)}: The complex data visualization dashboards based on live CSV uploads received almost no attention. Without sufficient presentation time to explain their specific operational contexts, they simply appeared as generic charts. This proved a harsh lesson: visual complexity does not inherently translate to perceived business value.
-    \item \textbf{The core skepticism (Product Identity)}: The most piercing critiques challenged the product's fundamental identity. Because the initial presentation was a generic ``feature walkthrough,'' evaluators rightly questioned: \textit{``What is the actual core value? What is the single selling point?''}
+\item \textbf{What resonated most (System Logic).} Reviewers were most engaged by the relationships between components---particularly how KGDRL recommendations connected to the Algorithm Arena and AI Copilot explanations.
+
+```
+\item \textbf{What was largely ignored (Visual Complexity).} Detailed dashboard visualizations attracted relatively little attention. Without sufficient operational context, many charts appeared as generic analytics rather than sources of business value.
+
+\item \textbf{The core skepticism (Product Identity).} The strongest critiques questioned the product's fundamental value proposition: \textit{What is the core benefit? Why would someone adopt this system?}
+```
+
 \end{itemize}
 
-\textbf{The Pivot (Shifting the Adoption Barrier)}: This skepticism revealed that our immediate adoption barrier was not technical, but narrative. This feedback directly drove the fundamental restructuring of Section 1 in this report. We abandoned the ``feature-list'' approach and optimized the product positioning into the ``Risk Reversal Engine.'' 
+\textbf{The Key Lesson.} This feedback revealed that my immediate challenge was not technical performance but narrative clarity. As a result, we shifted the project's positioning away from a feature-oriented demonstration and toward the concept of a ``Risk Reversal Engine'' designed to reduce adoption friction. The experience reinforced the broader conclusion of this report: organizational attention, rather than algorithm quality, is often the primary constraint on digital innovation adoption.
