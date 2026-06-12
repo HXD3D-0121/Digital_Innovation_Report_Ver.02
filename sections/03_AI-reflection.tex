@@ -7,19 +7,27 @@
 
 \subsection{Human Judgment in Managing AI Output}
 
-The primary challenge in developing Maverick-SORT was not generating code, but verifying its accuracy, feasibility, and relevance at the sheer speed of AI output. While the agent (Claude Code) translated our mathematical KGDRL models into PyTorch boilerplate efficiently, it suffered from severe context degradation: it frequently forgot macro-project flows, struggled with cross-branch GitHub push logistics, and failed to retrieve previously working commands. 
+The primary challenge in developing Maverick-SORT was not generating code, but verifying its accuracy, feasibility, and relevance at the sheer speed of AI output. While the agent (Claude Code) translated my mathematical KGDRL models into PyTorch boilerplate efficiently, it suffered from severe context degradation: it frequently forgot macro-project flows, struggled with cross-branch GitHub push logistics, and failed to retrieve previously working commands efficiently. I also found it challenging when trying to maintain one practical solution when the agent itself was searching aimlessly so I had to interrupt the running and redirect it back to the right way.  
 
-To counter this, the human role shifted to strict \textbf{project management and traceability}. AI-generated outputs were only accepted when they satisfied three criteria: \textbf{\textcolor{red}{technical correctness, consistency with the KGDRL design, and practical relevance to the warehouse use case}}. I forced the agent to maintain continuous markdown logs---such as \texttt{ai\_usage\_review.md}, \texttt{research\_note.md}, and \texttt{DATA\_UPLOAD\_FEASIBILITY\_REPORT.md}---recording every dependency change, architectural pivot, and run result. When the AI inevitably hallucinated or drifted off-course, these logs allowed me to rapidly audit its steps and explicitly guide it back to the established R\&D baseline. AI is a revolutionary means of production, but human agency and project orchestration remain the absolute driving forces of creation. The resulting division of labor was simple: the AI accelerated execution, while I remained responsible for direction, validation, and integration.
+To counter this, the human role shifted to strict \textbf{project management and traceability}. AI-generated outputs were only accepted when they satisfied three criteria: \textbf{\textcolor{red}{technical correctness, consistency with the KGDRL design, and practical relevance to the warehouse use case}}. I forced the agent to maintain continuous markdown logs---such as \texttt{ai\_usage\_review.md}, \texttt{research\_note.md}, and \\ \texttt{DATA\_UPLOAD\_FEASIBILITY\_REPORT.md}---recording every dependency change, architectural pivot, and run result. When the AI inevitably hallucinated or drifted off-course, these logs allowed me to rapidly audit its steps, find the causes, and explicitly guide it back to the established R\&D baseline. AI is a revolutionary means of production, but human agency and project orchestration remain the absolute driving forces of creation. The resulting division of labor was simple: the AI accelerated execution, while I remained responsible for direction, validation, and integration.
 
-\subsection{A Concrete Error: Systems Thinking vs. Local Patching}
+% \subsection{A Concrete Error: Systems Thinking vs. Local Patching}
 
-One instructive failure during the Streamlit Cloud deployment perfectly illustrates the limitation of the AI's local reasoning compared to human systems-level thinking. 
+% One instructive failure during the Streamlit Cloud deployment perfectly illustrates the limitation of the AI's local reasoning compared to human systems-level thinking. 
 
-The AI had generated a config file with a standard \texttt{import transformers}. On the cloud, this triggered a catastrophic cascade: the import scanned for image models, sought \texttt{torchvision} (which was absent), threw a \texttt{ModuleNotFoundError}, and inadvertently triggered Streamlit's background file-watcher to infinitely restart the app.
+% The AI had generated a config file with a standard \texttt{import transformers}. On the cloud, this triggered a catastrophic cascade: the import scanned for image models, sought \texttt{torchvision} (which was absent), threw a \texttt{ModuleNotFoundError}, and inadvertently triggered Streamlit's background file-watcher to infinitely restart the app.
 
-When asked to fix this, the AI proposed adding \texttt{torchvision==0.22.0} to the requirements. However, this conflicted with our pinned \texttt{torch==2.12.0}. The AI then blindly suggested bumping \texttt{torch}, which would have destroyed our CUDA compatibility. 
+% When asked to fix this, the AI proposed adding \texttt{torchvision==0.22.0} to the requirements. However, this conflicted with our pinned \texttt{torch==2.12.0}. The AI then blindly suggested bumping \texttt{torch}, which would have destroyed our CUDA compatibility. 
 
-\textbf{Human judgment}: The AI was treating the symptom, not the disease. Recognizing the root cause, I implemented a systems-level defense: (1) suppressing the scan via environment variables, (2) lazy-loading the import, and crucially, (3) disabling Streamlit's file watcher entirely\parencite{Jurowetzki2026}. The AI lacks the environmental awareness to understand cloud background-watcher dynamics; that operational wisdom must come from the human.
+% \textbf{Human judgment}: The AI was treating the symptom, not the disease. Recognizing the root cause, I implemented a systems-level defense: (1) suppressing the scan via environment variables, (2) lazy-loading the import, and crucially, (3) disabling Streamlit's file watcher entirely\parencite{Jurowetzki2026}. The AI lacks the environmental awareness to understand cloud background-watcher dynamics; that operational wisdom must come from the human.
+
+\subsection{A Concrete Error: Version Iteration and Context Amnesia}
+
+One instructive failure occurred not in localized code logic, but in version iteration management, perfectly illustrating the AI's severe context amnesia across a longitudinal project. 
+
+When generating successive versions of the application (e.g., iterating through multiple \texttt{streamlit\_app.py} versions), the AI consistently failed to maintain feature parity. Instead of executing strict incremental updates based on the project blueprint, the AI produced fractured ``updates'' plagued by hallucinations and arbitrarily dropped functionalities. The outputs were often regressions rather than true iterations. 
+
+\textbf{Human judgment}: I initially expected the AI to seamlessly carry forward previous capabilities, failing to establish a stable, automated iteration mechanism to constrain it. Consequently, development became highly inefficient. After every AI generation, I had to expend massive cognitive bandwidth manually auditing the new code against the \texttt{ai\_usage\_review.md} logs and the original plan to detect silent deletions. The AI treats each iteration as an isolated event; human judgment and rigorous manual QA were strictly required to enforce longitudinal consistency.
 
 \subsection{Defensive Engineering and the ``Happy Path'' Fallacy}
 
@@ -43,12 +51,20 @@ Similarly, we found that \textbf{AI intrinsically assumes a ``happy path.''} For
     \footnotesize \textbf{Filter:}\\ ``Good Enough'' Criteria
 };
 
+% % Pillar 2: 3.2
+% \node[box, right=of b1] (b2) {
+%     \textbf{3.2 Systems Thinking}\\[0.2cm]
+%     \footnotesize \textbf{Context:}\\ Cloud Deployment Crash\\[0.1cm]
+%     \footnotesize \textbf{AI Flaw:}\\ Local Patching (Symptom)\\[0.1cm]
+%     \footnotesize \textbf{Human Fix:}\\ Root Cause Defense
+% };
+
 % Pillar 2: 3.2
 \node[box, right=of b1] (b2) {
-    \textbf{3.2 Systems Thinking}\\[0.2cm]
-    \footnotesize \textbf{Context:}\\ Cloud Deployment Crash\\[0.1cm]
-    \footnotesize \textbf{AI Flaw:}\\ Local Patching (Symptom)\\[0.1cm]
-    \footnotesize \textbf{Human Fix:}\\ Root Cause Defense
+    \textbf{3.2 Version Iteration}\\[0.2cm]
+    \footnotesize \textbf{Context:}\\ App Version Updates\\[0.1cm]
+    \footnotesize \textbf{AI Flaw:}\\ Context Amnesia \& Drops\\[0.1cm]
+    \footnotesize \textbf{Human Fix:}\\ Manual Audit \& QA
 };
 
 % Pillar 3: 3.3

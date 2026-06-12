@@ -39,15 +39,15 @@ While KGDRL provides the technical foundation of Maverick-SORT, the project ulti
 
 \subsection{Adoption-Centric Design: Why a Warehouse Manager Would Trust It}
 
-The main barrier to AI adoption in warehouse operations is rarely algorithmic accuracy; it is organizational risk. Maverick-SORT was therefore designed not only to optimize scheduling decisions, but also to reduce the perceived cost of trying a new system.
+The main barrier to AI adoption in warehouse operations may not be algorithmic accuracy, but organizational risk. Maverick-SORT was therefore designed not only to optimize scheduling decisions, but also to reduce the perceived cost of deploying a new system.
 
 \begin{itemize}
-\item \textbf{Trust through explainability}: In a GSP-regulated environment, black-box recommendations are difficult to justify. By anchoring KGDRL to established operational heuristics, the system produces recommendations that remain interpretable and consistent with managers' existing decision logic.
+\item \textbf{Trust through explainability}: In a GSP-regulated environment, black-box recommendations are difficult to justify. By anchoring KGDRL to established operational heuristics while providing adequate tutorials and instructions, the system produces recommendations that remain interpretable and consistent with managers' existing decision logic.
 
-\item \textbf{Trialability through risk reversal}: Most warehouse managers lack the time, budget, and organizational support required for a lengthy software pilot. The browser-based Essential Edition enables five-minute ``What-If'' simulations without touching live systems, lowering the activation energy of adoption.
+\item \textbf{Trialability through risk reversal}: Warehouse managers could lack the time, budget, and organizational support required for a lengthy software pilot. The browser-based Essential Edition enables five-minute ``What-If'' simulations without touching live systems in order to test the validity of decisions, lowering the activation energy of adoption.
 
 \item \textbf{Value through visible outcomes}: Rather than promising generic efficiency improvements, the system makes operational trade-offs explicit and quantifies potential savings. Managers can evaluate the impact of different scheduling strategies before committing to implementation.
-```
+
 
 \end{itemize}
 
@@ -75,4 +75,4 @@ LLM integration (optional) & Hugging Face & Three-tier fallback for explanations
 \end{tabular}
 \end{table}
 
-The Streamlit choice is worth explaining. We needed a runnable prototype that Wang Li could access via a web browser without installation. Streamlit's ``rerun-on-change'' model is imperfect for real-time dashboards (see Section~\ref{sec:results}), but it reduces deployment friction to near zero---critical for a product whose first hurdle is simply getting the user to try it.
+The Streamlit choice is worth explaining. We needed a runnable prototype that managers could access via a web browser without installation. Streamlit's ``rerun-on-change'' model is imperfect for real-time dashboards (see Section~\ref{sec:results}), but it reduces deployment friction to near zero---critical for a product whose first hurdle is simply getting the user to try it.
