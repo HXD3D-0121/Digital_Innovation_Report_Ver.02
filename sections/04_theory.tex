@@ -81,3 +81,60 @@ The class Demo Day provided a useful reality check regarding how the system was 
 \end{itemize}
 
 \textbf{The Key Lesson.} This feedback revealed that the immediate challenge was not technical performance but narrative clarity. As a result, the project's positioning shifted away from a feature-oriented demonstration and toward the concept of a ``Risk Reversal Engine'' designed to reduce adoption friction. The experience reinforced the broader conclusion of this report: organizational attention, rather than algorithm quality, is often the primary constraint on digital innovation adoption.
+
+\vspace{0.2cm}
+% --- Section 4 Theoretical Logic Summary ---
+\begin{figure}[htbp]
+\centering
+% 使用 resizebox 强制自适应页面宽度，保证在一行内完美显示，极限压缩高度
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    auto,
+    box/.style={draw=primarycolor, thick, rounded corners=3pt, fill=primarycolor!5, align=center, text width=3.8cm, minimum height=2.0cm, inner sep=3pt},
+    arrow/.style={->, thick, draw=accentcolor, >=stealth}
+]
+
+% Node 1: Jagged Frontier
+\node[box] (n1) {
+    \textbf{Jagged Frontier}\\[0.05cm]
+    \fontsize{7pt}{8pt}\selectfont What can AI reliably build?
+};
+
+% Node 2: Knowledge Codification
+\node[box, right=0.3cm of n1] (n2) {
+    \textbf{Codification}\\[0.05cm]
+    \fontsize{7pt}{8pt}\selectfont How is knowledge codified?
+};
+
+% Node 3: Augmentation
+\node[box, right=0.3cm of n2] (n3) {
+    \textbf{Augmentation}\\[0.05cm]
+    \fontsize{7pt}{8pt}\selectfont How to augment, not replace?
+};
+
+% Node 4: TOE Adoption
+\node[box, right=0.3cm of n3] (n4) {
+    \textbf{TOE Framework}\\[0.05cm]
+    \fontsize{7pt}{8pt}\selectfont Why might orgs still resist?
+};
+
+% Node 5: Demo Day
+\node[box, right=0.3cm of n4] (n5) {
+    \textbf{Demo Day}\\[0.05cm]
+    \fontsize{7pt}{8pt}\selectfont What does feedback reveal?
+};
+
+% Connecting Arrows
+\draw[arrow] (n1) -- (n2);
+\draw[arrow] (n2) -- (n3);
+\draw[arrow] (n3) -- (n4);
+\draw[arrow] (n4) -- (n5);
+
+\end{tikzpicture}%
+}
+\vspace{0.1cm} % 向上收缩标题间距，进一步节省空间
+\caption{The logical progression of theoretical reflection in Maverick-SORT.}
+\label{fig:theory_logic}
+\vspace{0.1cm} % 减少图表底部的空白
+\end{figure}
+% --- 图表结束 ---

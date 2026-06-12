@@ -9,7 +9,7 @@
 
 The primary challenge in developing Maverick-SORT was not generating code, but verifying its accuracy, feasibility, and relevance at the sheer speed of AI output. While the agent (Claude Code) translated our mathematical KGDRL models into PyTorch boilerplate efficiently, it suffered from severe context degradation: it frequently forgot macro-project flows, struggled with cross-branch GitHub push logistics, and failed to retrieve previously working commands. 
 
-To counter this, the human role shifted to strict \textbf{project management and traceability}. AI-generated outputs were only accepted when they satisfied three criteria: technical correctness, consistency with the KGDRL design, and practical relevance to the warehouse use case. I forced the agent to maintain continuous markdown logs---such as \texttt{ai\_usage\_review.md}, \texttt{research\_note.md}, and \texttt{DATA\_UPLOAD\_FEASIBILITY\_REPORT.md}---recording every dependency change, architectural pivot, and run result. When the AI inevitably hallucinated or drifted off-course, these logs allowed me to rapidly audit its steps and explicitly guide it back to the established R\&D baseline. AI is a revolutionary means of production, but human agency and project orchestration remain the absolute driving forces of creation. The resulting division of labor was simple: the AI accelerated execution, while I remained responsible for direction, validation, and integration.
+To counter this, the human role shifted to strict \textbf{project management and traceability}. AI-generated outputs were only accepted when they satisfied three criteria: \textbf{\textcolor{red}{technical correctness, consistency with the KGDRL design, and practical relevance to the warehouse use case}}. I forced the agent to maintain continuous markdown logs---such as \texttt{ai\_usage\_review.md}, \texttt{research\_note.md}, and \texttt{DATA\_UPLOAD\_FEASIBILITY\_REPORT.md}---recording every dependency change, architectural pivot, and run result. When the AI inevitably hallucinated or drifted off-course, these logs allowed me to rapidly audit its steps and explicitly guide it back to the established R\&D baseline. AI is a revolutionary means of production, but human agency and project orchestration remain the absolute driving forces of creation. The resulting division of labor was simple: the AI accelerated execution, while I remained responsible for direction, validation, and integration.
 
 \subsection{A Concrete Error: Systems Thinking vs. Local Patching}
 
@@ -24,3 +24,54 @@ When asked to fix this, the AI proposed adding \texttt{torchvision==0.22.0} to t
 \subsection{Defensive Engineering and the ``Happy Path'' Fallacy}
 
 Similarly, we found that \textbf{AI intrinsically assumes a ``happy path.''} For the CSV upload module, the AI wrote ingestion code expecting the user's data to perfectly match our schema. Knowing the hostility and unpredictability of actual warehouse data, I manually intervened to enforce defensive programming (e.g., \texttt{df.columns.intersection(expected)}). The AI can generate the processing logic, but only the human understands the chaos of the operational environment it will be deployed in, shifting the paradigm from \textit{``assume the data is right''} to \textit{``assume the data is broken.''}
+
+% --- AI Reflection 逻辑总结图 ---
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node distance=0.6cm and 0.5cm,
+    box/.style={draw=primarycolor, thick, rounded corners, align=center, inner sep=6pt, fill=primarycolor!5, text width=4.5cm, minimum height=2.8cm},
+    conclusion/.style={draw=accentcolor, thick, rounded corners, align=center, inner sep=8pt, fill=accentcolor!10, text width=14.5cm},
+    arrow/.style={->, thick, draw=aaugray, >=stealth}
+]
+
+% Pillar 1: 3.1
+\node[box] (b1) {
+    \textbf{3.1 Human Judgment}\\[0.2cm]
+    \footnotesize \textbf{Challenge:}\\ Validation $>$ Generation\\[0.1cm]
+    \footnotesize \textbf{Process:}\\ Markdown Traceability\\[0.1cm]
+    \footnotesize \textbf{Filter:}\\ ``Good Enough'' Criteria
+};
+
+% Pillar 2: 3.2
+\node[box, right=of b1] (b2) {
+    \textbf{3.2 Systems Thinking}\\[0.2cm]
+    \footnotesize \textbf{Context:}\\ Cloud Deployment Crash\\[0.1cm]
+    \footnotesize \textbf{AI Flaw:}\\ Local Patching (Symptom)\\[0.1cm]
+    \footnotesize \textbf{Human Fix:}\\ Root Cause Defense
+};
+
+% Pillar 3: 3.3
+\node[box, right=of b2] (b3) {
+    \textbf{3.3 Defensive Eng.}\\[0.2cm]
+    \footnotesize \textbf{Context:}\\ CSV Upload Module\\[0.1cm]
+    \footnotesize \textbf{AI Flaw:}\\ The ``Happy Path'' Fallacy\\[0.1cm]
+    \footnotesize \textbf{Human Fix:}\\ Defensive Integration
+};
+
+% Conclusion Block
+\node[conclusion, below=1.2cm of b2] (conc) {
+    \textbf{\large The Ultimate Division of Labor}\\[0.15cm]
+    \textit{AI accelerates execution; humans provide direction, validation, and integration.}
+};
+
+% Connecting Arrows
+\draw[arrow] (b1.south) -- (b1.south |- conc.north);
+\draw[arrow] (b2.south) -- (conc.north);
+\draw[arrow] (b3.south) -- (b3.south |- conc.north);
+
+\end{tikzpicture}
+\caption{Logical framework of Human-AI collaboration during system development.}
+\label{fig:ai_reflection_summary}
+\end{figure}
+% --- 图表结束 ---
